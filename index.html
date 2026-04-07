@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heisenberg Creative Empire | Let's Cook</title>
+    <meta name="description" content="A global creative team pushing the boundaries of design, storytelling, and technology. Elite video editing, award-winning graphic design, and full-stack web development.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Three.js Canvas Container -->
+    <div id="canvas-container"></div>
+
+    <!-- ============ CINEMATIC INTRO ============ -->
+    <div id="intro-overlay">
+        <div class="intro-content">
+            <p class="intro-line intro-line-1">Let's Cook.</p>
+            <p class="intro-line intro-line-2">We are the ones who knock.</p>
+            <div class="intro-planet">
+                <div class="planet-core"></div>
+                <div class="planet-ring ring-1"></div>
+                <div class="planet-ring ring-2"></div>
+                <div class="planet-glow"></div>
+                <span class="planet-logo">BrBa</span>
+            </div>
+            <button class="intro-enter" id="enter-btn">
+                <span class="btn-text">Enter the Lab</span>
+                <span class="btn-glow"></span>
+            </button>
+        </div>
+        <div class="intro-particles"></div>
+    </div>
+
+    <!-- ============ NAVIGATION ============ -->
+    <nav id="main-nav">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon">BrBa</span>
+                <span class="logo-text">Empire</span>
+            </a>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link active" data-section="hero">Home</a>
+                <a href="#team" class="nav-link" data-section="team">Team</a>
+                <a href="#projects" class="nav-link" data-section="projects">Galaxy</a>
+                <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+                <a href="#testimonials" class="nav-link" data-section="testimonials">Impact</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </div>
+            <a href="#contact" class="nav-cta">Launch Project</a>
+            <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main id="main-content">
+
+        <!-- ======== HERO SECTION ======== -->
+        <section id="hero" class="section">
+            <div class="section-inner">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>Meth Lab • Est. 2008</span>
+                </div>
+                <h1 class="hero-title">
+                    <span class="title-line">The</span>
+                    <span class="title-line title-accent">Heisenberg</span>
+                    <span class="title-line">Empire</span>
+                </h1>
+                <p class="hero-subtitle">A global creative team pushing the boundaries of design, storytelling, and technology.</p>
+
+                <div class="hero-achievements">
+                    <div class="achievement">
+                        <span class="achievement-icon">⭐</span>
+                        <div>
+                            <strong>4.6 / 5</strong>
+                            <span>International Client Rating</span>
+                        </div>
+                    </div>
+                    <div class="achievement">
+                        <span class="achievement-icon">🏆</span>
+                        <div>
+                            <strong>State Award</strong>
+                            <span>Los Angeles, CA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-card" data-count="200">
+                        <div class="stat-number">200<span class="stat-plus">+</span></div>
+                        <div class="stat-label">Projects Delivered</div>
+                        <div class="stat-glow"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">30<span class="stat-plus">+</span></div>
+                        <div class="stat-label">Global Clients</div>
+                        <div class="stat-glow"></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Creative Specialists</div>
+                        <div class="stat-glow"></div>
+                    </div>
+                </div>
+
+                <div class="hero-cta-group">
+                    <a href="#projects" class="btn btn-primary">
+                        <span>Explore Our Galaxy</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                    <a href="#contact" class="btn btn-ghost">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>Scroll to Explore</span>
+            </div>
+        </section>
+
+        <!-- ======== TEAM DIMENSION ======== -->
+        <section id="team" class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <span class="section-tag">// TEAM DIMENSION</span>
+                    <h2 class="section-title">Meet the <span class="gradient-text">Cooks</span></h2>
+                    <p class="section-desc">Each specialist brings a unique 99.1% pure creative force to the empire.</p>
+                </div>
+
+                <div class="team-grid">
+                    <!-- Fahad -->
+                    <div class="team-card" data-role="founder">
+                        <div class="card-hologram">
+                            <div class="card-avatar">
+                                <img class="avatar-img" src="avatar_fahad.png" alt="Fahad">
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="card-info">
+                                <h3>Fahad</h3>
+                                <span class="card-role">Founder</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Experience</span>
+                                    <span class="detail-value">8+ Years</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Specialty</span>
+                                    <span class="detail-value">Cinematic Editing</span>
+                                </div>
+                                <div class="card-skills">
+                                    <span class="skill-tag">Premiere Pro</span>
+                                    <span class="skill-tag">After Effects</span>
+                                    <span class="skill-tag">DaVinci Resolve</span>
+                                </div>
+                                <div class="card-highlight">150+ videos delivered for global brands</div>
+                            </div>
+                        </div>
+                        <div class="card-glow"></div>
+                    </div>
+
+                    <!-- Siddhartha -->
+                    <div class="team-card" data-role="ceo">
+                        <div class="card-hologram">
+                            <div class="card-avatar">
+                                <img class="avatar-img" src="avatar_siddhartha.png" alt="Siddhartha">
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="card-info">
+                                <h3>Siddhartha</h3>
+                                <span class="card-role">CEO</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Experience</span>
+                                    <span class="detail-value">10+ Years</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Specialty</span>
+                                    <span class="detail-value">Brand Identity</span>
+                                </div>
+                                <div class="card-skills">
+                                    <span class="skill-tag">Photoshop</span>
+                                    <span class="skill-tag">Illustrator</span>
+                                    <span class="skill-tag">Figma</span>
+                                </div>
+                                <div class="card-highlight">Award-winning designer, 200+ brands created</div>
+                            </div>
+                        </div>
+                        <div class="card-glow"></div>
+                    </div>
+
+                    <!-- Nikhil -->
+                    <div class="team-card" data-role="video">
+                        <div class="card-hologram">
+                            <div class="card-avatar">
+                                <img class="avatar-img" src="avatar_nikhil.png" alt="Nikhil">
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="card-info">
+                                <h3>Nikhil</h3>
+                                <span class="card-role">Lead Video Editor</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Experience</span>
+                                    <span class="detail-value">7+ Years</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Specialty</span>
+                                    <span class="detail-value">Video Editing</span>
+                                </div>
+                                <div class="card-skills">
+                                    <span class="skill-tag">Premiere Pro</span>
+                                    <span class="skill-tag">After Effects</span>
+                                    <span class="skill-tag">DaVinci Resolve</span>
+                                </div>
+                                <div class="card-highlight">Edited 100+ cinematic videos</div>
+                            </div>
+                        </div>
+                        <div class="card-glow"></div>
+                    </div>
+
+                    <!-- Tanisha -->
+                    <div class="team-card" data-role="dev">
+                        <div class="card-hologram">
+                            <div class="card-avatar">
+                                <img class="avatar-img" src="avatar_tanisha.png" alt="Tanisha">
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="card-info">
+                                <h3>Tanisha</h3>
+                                <span class="card-role">Lead Developer</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Experience</span>
+                                    <span class="detail-value">6+ Years</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Specialty</span>
+                                    <span class="detail-value">Web Applications</span>
+                                </div>
+                                <div class="card-skills">
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">Node.js</span>
+                                    <span class="skill-tag">Three.js</span>
+                                </div>
+                                <div class="card-highlight">Built 50+ production web applications</div>
+                            </div>
+                        </div>
+                        <div class="card-glow"></div>
+                    </div>
+
+                    <!-- Anupam -->
+                    <div class="team-card" data-role="design">
+                        <div class="card-hologram">
+                            <div class="card-avatar">
+                                <img class="avatar-img" src="avatar_anupam.png" alt="Anupam">
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="card-info">
+                                <h3>Anupam</h3>
+                                <span class="card-role">Lead Designer</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Experience</span>
+                                    <span class="detail-value">12+ Years</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Specialty</span>
+                                    <span class="detail-value">Creative Strategy</span>
+                                </div>
+                                <div class="card-skills">
+                                    <span class="skill-tag">Brand Strategy</span>
+                                    <span class="skill-tag">Art Direction</span>
+                                    <span class="skill-tag">Leadership</span>
+                                </div>
+                                <div class="card-highlight">Led campaigns for Fortune 500 companies</div>
+                            </div>
+                        </div>
+                        <div class="card-glow"></div>
+                    </div>
+
+                    <!-- Tanushi -->
+                    <div class="team-card" data-role="pm">
+                        <div class="card-hologram">
+                            <div class="card-avatar">
+                                <img class="avatar-img" src="avatar_tanushi.png" alt="Tanushi">
+                                <div class="avatar-ring"></div>
+                            </div>
+                            <div class="card-info">
+                                <h3>Tanushi</h3>
+                                <span class="card-role">Lead Project Manager</span>
+                            </div>
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Experience</span>
+                                    <span class="detail-value">5+ Years</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Specialty</span>
+                                    <span class="detail-value">Project Management</span>
+                                </div>
+                                <div class="card-skills">
+                                    <span class="skill-tag">Agile</span>
+                                    <span class="skill-tag">Scrum</span>
+                                    <span class="skill-tag">Leadership</span>
+                                </div>
+                                <div class="card-highlight">Led over 50 successful deliveries</div>
+                            </div>
+                        </div>
+                        <div class="card-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== CREATIVE GALAXY (PROJECTS) ======== -->
+        <section id="projects" class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <span class="section-tag">// EMPIRE GALAXY</span>
+                    <h2 class="section-title">Explore Our <span class="gradient-text">Product Empire</span></h2>
+                    <p class="section-desc">Each product is a batch of its own. Click to explore our direct project drives.</p>
+                    <div class="hero-cta-group" style="padding-top: 1rem; justify-content: center; gap: 10px;">
+                        <a href="https://drive.google.com/drive/u/0/folders/1fKz1AA1PUA9g6raknQDDDQkfDcndGzgN" target="_blank" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.7rem;">
+                            <span>Video Drive</span>
+                        </a>
+                        <a href="https://drive.google.com/drive/folders/1Q3p95AtX6nSSBGHU0ljmkmBG__dLyK9A?usp=sharing" target="_blank" class="btn btn-ghost" style="padding: 10px 24px; font-size: 0.7rem;">
+                            <span>Graphics Drive</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="galaxy-grid">
+                    <div class="planet-card" data-project="nebula">
+                        <div class="planet-visual">
+                            <div class="planet-sphere" style="--planet-hue: 280; --planet-sat: 80%;"></div>
+                            <div class="planet-orbit"></div>
+                            <div class="planet-particles"></div>
+                        </div>
+                        <div class="planet-info">
+                            <span class="planet-category">Video + Branding</span>
+                            <h3 class="planet-name">Nebula Brand Campaign</h3>
+                            <p class="planet-desc">Complete rebrand and cinematic video campaign for a tech startup that redefined their market presence.</p>
+                            <div class="planet-meta">
+                                <span class="meta-tag">Video Production</span>
+                                <span class="meta-tag">Brand Design</span>
+                                <span class="meta-tag">Strategy</span>
+                            </div>
+                        </div>
+                        <div class="planet-glow"></div>
+                    </div>
+
+                    <div class="planet-card" data-project="quantum">
+                        <div class="planet-visual">
+                            <div class="planet-sphere" style="--planet-hue: 200; --planet-sat: 90%;"></div>
+                            <div class="planet-orbit"></div>
+                            <div class="planet-particles"></div>
+                        </div>
+                        <div class="planet-info">
+                            <span class="planet-category">Web Application</span>
+                            <h3 class="planet-name">Quantum Dashboard</h3>
+                            <p class="planet-desc">Real-time analytics platform with immersive data visualization and AI-powered insights for enterprise clients.</p>
+                            <div class="planet-meta">
+                                <span class="meta-tag">React</span>
+                                <span class="meta-tag">Node.js</span>
+                                <span class="meta-tag">Data Viz</span>
+                            </div>
+                        </div>
+                        <div class="planet-glow"></div>
+                    </div>
+
+                    <div class="planet-card" data-project="stellar">
+                        <div class="planet-visual">
+                            <div class="planet-sphere" style="--planet-hue: 330; --planet-sat: 75%;"></div>
+                            <div class="planet-orbit"></div>
+                            <div class="planet-particles"></div>
+                        </div>
+                        <div class="planet-info">
+                            <span class="planet-category">Cinematic Film</span>
+                            <h3 class="planet-name">Stellar Motion Reel</h3>
+                            <p class="planet-desc">A breathtaking cinematic brand film for a luxury fashion house, blending haute couture with digital artistry.</p>
+                            <div class="planet-meta">
+                                <span class="meta-tag">Cinematography</span>
+                                <span class="meta-tag">Motion Graphics</span>
+                                <span class="meta-tag">Color Grading</span>
+                            </div>
+                        </div>
+                        <div class="planet-glow"></div>
+                    </div>
+
+                    <div class="planet-card" data-project="cosmic">
+                        <div class="planet-visual">
+                            <div class="planet-sphere" style="--planet-hue: 50; --planet-sat: 85%;"></div>
+                            <div class="planet-orbit"></div>
+                            <div class="planet-particles"></div>
+                        </div>
+                        <div class="planet-info">
+                            <span class="planet-category">Brand Identity</span>
+                            <h3 class="planet-name">Cosmic Identity System</h3>
+                            <p class="planet-desc">Complete brand identity system for a fintech company, from logo to comprehensive brand guidelines.</p>
+                            <div class="planet-meta">
+                                <span class="meta-tag">Logo Design</span>
+                                <span class="meta-tag">Brand Guide</span>
+                                <span class="meta-tag">Print &amp; Digital</span>
+                            </div>
+                        </div>
+                        <div class="planet-glow"></div>
+                    </div>
+
+                    <div class="planet-card" data-project="aurora">
+                        <div class="planet-visual">
+                            <div class="planet-sphere" style="--planet-hue: 160; --planet-sat: 80%;"></div>
+                            <div class="planet-orbit"></div>
+                            <div class="planet-particles"></div>
+                        </div>
+                        <div class="planet-info">
+                            <span class="planet-category">E-Commerce Platform</span>
+                            <h3 class="planet-name">Aurora Platform</h3>
+                            <p class="planet-desc">Full-stack e-commerce platform with AR product previews and smooth checkout flow serving 100K+ users.</p>
+                            <div class="planet-meta">
+                                <span class="meta-tag">Next.js</span>
+                                <span class="meta-tag">AR Integration</span>
+                                <span class="meta-tag">E-Commerce</span>
+                            </div>
+                        </div>
+                        <div class="planet-glow"></div>
+                    </div>
+
+                    <div class="planet-card" data-project="photon">
+                        <div class="planet-visual">
+                            <div class="planet-sphere" style="--planet-hue: 260; --planet-sat: 90%;"></div>
+                            <div class="planet-orbit"></div>
+                            <div class="planet-particles"></div>
+                        </div>
+                        <div class="planet-info">
+                            <span class="planet-category">Interactive Experience</span>
+                            <h3 class="planet-name">Photon XR Experience</h3>
+                            <p class="planet-desc">An award-winning interactive WebGL experience for a gaming brand that captivated millions worldwide.</p>
+                            <div class="planet-meta">
+                                <span class="meta-tag">WebGL</span>
+                                <span class="meta-tag">Three.js</span>
+                                <span class="meta-tag">Interactive</span>
+                            </div>
+                        </div>
+                        <div class="planet-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== SKILL MATRIX ======== -->
+        <section id="skills" class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <span class="section-tag">// SKILL MATRIX</span>
+                    <h2 class="section-title">Our <span class="gradient-text">Capability Nodes</span></h2>
+                    <p class="section-desc">An interconnected network of specialized creative and technical expertise.</p>
+                </div>
+
+                <div class="skills-matrix">
+                    <canvas id="skills-canvas"></canvas>
+                    <div class="skills-nodes">
+                        <div class="skill-node" data-skill="video" style="--node-x: 15%; --node-y: 30%;">
+                            <div class="node-core">
+                                <div class="node-icon">🎬</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <h4>Video Editing</h4>
+                            <p>Premiere Pro • After Effects • DaVinci Resolve</p>
+                            <div class="node-level" data-level="95"></div>
+                        </div>
+
+                        <div class="skill-node" data-skill="design" style="--node-x: 50%; --node-y: 10%;">
+                            <div class="node-core">
+                                <div class="node-icon">🎨</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <h4>Graphic Design</h4>
+                            <p>Photoshop • Illustrator • Figma</p>
+                            <div class="node-level" data-level="98"></div>
+                        </div>
+
+                        <div class="skill-node" data-skill="dev" style="--node-x: 85%; --node-y: 30%;">
+                            <div class="node-core">
+                                <div class="node-icon">💻</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <h4>Full Stack Dev</h4>
+                            <p>React • Node.js • Three.js • Python</p>
+                            <div class="node-level" data-level="96"></div>
+                        </div>
+
+                        <div class="skill-node" data-skill="uiux" style="--node-x: 25%; --node-y: 70%;">
+                            <div class="node-core">
+                                <div class="node-icon">✨</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <h4>UI/UX Design</h4>
+                            <p>Prototyping • User Research • Interaction Design</p>
+                            <div class="node-level" data-level="95"></div>
+                        </div>
+
+                        <div class="skill-node" data-skill="brand" style="--node-x: 50%; --node-y: 55%;">
+                            <div class="node-core">
+                                <div class="node-icon">💎</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <h4>Branding</h4>
+                            <p>Strategy • Identity Systems • Guidelines</p>
+                            <div class="node-level" data-level="96"></div>
+                        </div>
+
+                        <div class="skill-node" data-skill="motion" style="--node-x: 75%; --node-y: 70%;">
+                            <div class="node-core">
+                                <div class="node-icon">🚀</div>
+                                <div class="node-pulse"></div>
+                            </div>
+                            <h4>Motion Graphics</h4>
+                            <p>After Effects • Cinema 4D • Blender</p>
+                            <div class="node-level" data-level="97"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== CLIENT IMPACT ======== -->
+        <section id="testimonials" class="section">
+            <div class="section-inner">
+                <div class="section-header">
+                    <span class="section-tag">// CLIENT IMPACT</span>
+                    <h2 class="section-title">Voices from the <span class="gradient-text">Universe</span></h2>
+                    <p class="section-desc">What our clients say about their experience.</p>
+                </div>
+
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-glow"></div>
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">The motion graphics and 3D animations they delivered completely revitalized our product launch. Exceptional eye for detail and timely execution.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 260;"><span>RK</span></div>
+                            <div>
+                                <strong>Rajesh Kumar</strong>
+                                <span>CEO, TechNova Inc.</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-glow"></div>
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">Our brand identity is finally cohesive and modern. They created a comprehensive guideline that our entire organization relies on daily. Highly recommended.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 190;"><span>SL</span></div>
+                            <div>
+                                <strong>Sofia Laurent</strong>
+                                <span>CMO, LuxeVibe Fashion</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars"><span style="color: #FFD700">★★★★</span><span style="color: #777">★</span></div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-glow"></div>
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">We asked for a WebGL experience and they delivered a masterpiece. The performance and visual quality of our interactive platform exceeded all expectations.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 140;"><span>MZ</span></div>
+                            <div>
+                                <strong>Marcus Zhang</strong>
+                                <span>Founder, QuantumLabs</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                    </div>
+
+                    <div class="testimonial-card">
+                        <div class="testimonial-glow"></div>
+                        <div class="testimonial-quote">"</div>
+                        <p class="testimonial-text">From robust React architecture to seamless cinematic video editing, this team handles full-stack creative needs better than any agency we've hired.</p>
+                        <div class="testimonial-author">
+                            <div class="author-avatar" style="--hue: 340;"><span>OB</span></div>
+                            <div>
+                                <strong>Olivia Brooks</strong>
+                                <span>Director, StellarMedia Group</span>
+                            </div>
+                        </div>
+                        <div class="testimonial-stars">★★★★★</div>
+                    </div>
+                </div>
+
+                <!-- Rate Us Widget -->
+                <div class="rate-us-container">
+                    <h3 class="rate-prompt">Leave a Review</h3>
+                    <div class="stars-widget" id="rate-stars">
+                        <span class="star-btn" data-val="1">★</span>
+                        <span class="star-btn" data-val="2">★</span>
+                        <span class="star-btn" data-val="3">★</span>
+                        <span class="star-btn" data-val="4">★</span>
+                        <span class="star-btn" data-val="5">★</span>
+                    </div>
+                    <div class="review-input-area">
+                        <textarea id="review-text" placeholder="Write your experience with us..." rows="4"></textarea>
+                        <button id="submit-review-btn" class="btn btn-primary btn-submit-review">Publish Review</button>
+                    </div>
+                    <p class="rate-thanks" id="rate-thanks" style="display: none;"></p>
+                </div>
+
+                <!-- User Submitted Reviews Container -->
+                <div id="user-reviews-container" class="testimonials-grid user-reviews-grid" style="margin-top: 40px; border-top: 1px solid rgba(139, 92, 246, 0.2); padding-top: 40px;">
+                    <!-- Dynamically injected reviews will go here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ======== CONTACT PORTAL ======== -->
+        <section id="contact" class="section">
+            <div class="section-inner">
+                <div class="contact-wrapper">
+                    <div class="portal-visual">
+                        <div class="portal-ring portal-ring-1"></div>
+                        <div class="portal-ring portal-ring-2"></div>
+                        <div class="portal-ring portal-ring-3"></div>
+                        <div class="portal-core"></div>
+                        <div class="portal-glow"></div>
+                    </div>
+
+                    <div class="contact-content">
+                        <div class="section-header">
+                            <span class="section-tag">// CONTACT US</span>
+                            <h2 class="section-title">Cook Your Next <span class="gradient-text">Batch With Us</span></h2>
+                            <p class="section-desc">Ready to break bad? Send a message and let's cook something extraordinary.</p>
+                        </div>
+
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                                    <div class="input-glow"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                                    <div class="input-glow"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-type">Project Type</label>
+                                <select id="project-type" name="project-type" required>
+                                    <option value="" disabled selected>Select project type</option>
+                                    <option value="video">Cinematic Editing (Adobe Suite)</option>
+                                    <option value="design">Brand Identity & Design (PS/AI/Figma)</option>
+                                    <option value="web">Web Applications (React/Three.js)</option>
+                                    <option value="motion">3D Motion Design (C4D/Blender)</option>
+                                    <option value="full">Creative Strategy & Full Package</option>
+                                </select>
+                                <div class="input-glow"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Your Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Tell us about your project vision..." required></textarea>
+                                <div class="input-glow"></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-submit">
+                                <span>Transmit Message</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z"/></svg>
+                            </button>
+                        </form>
+
+                        <div class="contact-links">
+                            <a href="#" class="social-link" aria-label="Twitter/X">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="LinkedIn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Behance">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h5.025c-.154-1.545-1.258-2.16-2.524-2.16-1.378 0-2.318.782-2.501 2.16zM1.004 21l.006-18h6.563c4.27 0 6.15 2.659 3.81 5.867C14 11.756 14.58 15.107 12.089 17.5c-1.161 1.078-2.59 1.5-4.549 1.5H1.004zM5 8.5v3h2.898c.907 0 1.667-.235 1.667-1.5s-.76-1.5-1.667-1.5H5zm0 5.5v3.5h3.032c1.1 0 1.833-.593 1.833-1.75s-.733-1.75-1.833-1.75H5z"/></svg>
+                            </a>
+                            <a href="#" class="social-link download-link" aria-label="Download Portfolio">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                                <span>Portfolio PDF</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer id="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="logo-icon">BrBa</span>
+                <span>The Heisenberg Empire</span>
+            </div>
+            <p class="footer-copy">&copy; 2025 The Heisenberg Empire. All rights reserved. Cooking since 2008.</p>
+        </div>
+    </footer>
+
+    <!-- ============ PROJECT MODAL ============ -->
+    <div id="project-modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <div class="modal-header">
+                <span class="modal-category"></span>
+                <h2 class="modal-title"></h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc"></p>
+                <div class="modal-showcase">
+                    <div class="showcase-item">
+                        <h4>Project Highlights</h4>
+                        <ul class="modal-highlights"></ul>
+                    </div>
+                    <div class="showcase-item">
+                        <h4>Technologies Used</h4>
+                        <div class="modal-tech"></div>
+                    </div>
+                    <div class="showcase-item">
+                        <h4>Results</h4>
+                        <div class="modal-results"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ SCRIPTS ============ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
