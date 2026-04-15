@@ -719,8 +719,8 @@ body {
    TEAM SECTION
    ============================================ */
 .team-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     justify-content: center;
 }
@@ -731,7 +731,7 @@ body {
     overflow: hidden;
     transition: var(--transition-smooth);
     perspective: 1000px;
-    width: calc(33.333% - 22px);
+    width: 100%;
     max-width: 380px;
     opacity: 0; /* Default hidden for animation */
     transition: opacity 0.5s ease;
@@ -1752,9 +1752,16 @@ body {
 /* ============================================
    RESPONSIVE
    ============================================ */
+
+/* --- Tablet (max 1024px) --- */
 @media (max-width: 1024px) {
     .team-grid {
+        display: grid;
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .team-card {
+        width: 100%;
     }
 
     .galaxy-grid {
@@ -1782,17 +1789,23 @@ body {
     .modal-results {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
+/* --- Mobile (max 768px) --- */
 @media (max-width: 768px) {
     :root {
-        --section-padding: 50px 0;
+        --section-padding: 40px 0;
     }
 
     .section-inner {
-        padding: 0 20px;
+        padding: 0 16px;
     }
 
+    /* Navigation */
     .nav-links {
         display: none;
         position: absolute;
@@ -1812,7 +1825,7 @@ body {
     }
 
     .nav-link {
-        padding: 12px 40px;
+        padding: 12px 24px;
     }
 
     .nav-cta {
@@ -1823,37 +1836,185 @@ body {
         display: flex;
     }
 
-    .team-grid {
-        grid-template-columns: 1fr;
+    .nav-inner {
+        padding: 0 16px;
     }
 
-    .galaxy-grid {
-        grid-template-columns: 1fr;
+    /* Hero */
+    #hero {
+        min-height: auto;
+        padding-top: 100px;
+        padding-bottom: 40px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 7vw, 3rem);
+        word-break: break-word;
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+        padding: 0 8px;
+    }
+
+    .hero-badge {
+        font-size: 0.55rem;
+        padding: 6px 14px;
     }
 
     .hero-stats {
         flex-direction: column;
         align-items: center;
+        gap: 16px;
     }
 
     .stat-card {
         width: 100%;
         max-width: 280px;
+        padding: 20px 24px;
+        animation: none;
+    }
+
+    .stat-number {
+        font-size: 2rem;
     }
 
     .hero-achievements {
         flex-direction: column;
         align-items: center;
+        gap: 12px;
     }
 
-    .testimonials-grid {
+    .achievement {
+        padding: 10px 18px;
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+
+    .hero-cta-group {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 0 16px;
+    }
+
+    .hero-cta-group .btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .hero-scroll-indicator {
+        display: none;
+    }
+
+    /* Section Headers */
+    .section-header {
+        margin-bottom: 28px;
+    }
+
+    .section-title {
+        font-size: clamp(1.4rem, 5vw, 2rem);
+        word-break: break-word;
+    }
+
+    .section-desc {
+        font-size: 0.9rem;
+        padding: 0 8px;
+    }
+
+    .section-tag {
+        font-size: 0.6rem;
+    }
+
+    /* Team Grid */
+    .team-grid {
+        display: grid;
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    .form-row {
+    .team-card {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .card-hologram {
+        padding: 24px 20px;
+    }
+
+    /* Show card details by default on mobile (no hover) */
+    .card-details {
+        max-height: 300px;
+        opacity: 1;
+    }
+
+    .card-info h3 {
+        font-size: 0.95rem;
+    }
+
+    .card-role {
+        font-size: 0.75rem;
+    }
+
+    .detail-value {
+        font-size: 0.75rem;
+    }
+
+    .detail-label {
+        font-size: 0.7rem;
+    }
+
+    .skill-tag {
+        font-size: 0.6rem;
+        padding: 3px 8px;
+    }
+
+    .card-highlight {
+        font-size: 0.7rem;
+    }
+
+    /* Projects Galaxy */
+    .galaxy-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
+    .planet-card {
+        padding: 24px 20px;
+    }
+
+    .planet-visual {
+        width: 90px;
+        height: 90px;
+        margin-bottom: 16px;
+    }
+
+    .planet-name {
+        font-size: 0.95rem;
+    }
+
+    .planet-desc {
+        font-size: 0.8rem;
+    }
+
+    .planet-category {
+        font-size: 0.55rem;
+    }
+
+    .meta-tag {
+        font-size: 0.55rem;
+    }
+
+    /* Drive buttons in projects section */
+    .hero-cta-group[style*="justify-content: center"] {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    /* Skills Matrix */
     .skills-matrix {
         min-height: auto;
     }
@@ -1862,7 +2023,7 @@ body {
         position: relative;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: 12px;
         min-height: auto;
     }
 
@@ -1872,24 +2033,94 @@ body {
         top: auto;
         transform: none;
         width: 100%;
+        padding: 16px 12px;
     }
 
     .skill-node:hover {
         transform: scale(1.03);
     }
 
+    .skill-node h4 {
+        font-size: 0.7rem;
+    }
+
+    .skill-node p {
+        font-size: 0.6rem;
+    }
+
+    .node-core {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 8px;
+    }
+
+    .node-icon {
+        font-size: 1.2rem;
+    }
+
     #skills-canvas {
         display: none;
     }
 
-    .footer-inner {
-        flex-direction: column;
-        gap: 12px;
-        text-align: center;
+    /* Testimonials */
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .testimonial-card {
+        padding: 24px 20px;
+    }
+
+    .testimonial-text {
+        font-size: 0.9rem;
+    }
+
+    .testimonial-quote {
+        font-size: 2.5rem;
+    }
+
+    .testimonial-stars {
+        position: static;
+        margin-top: 12px;
+    }
+
+    .testimonial-author strong {
+        font-size: 0.8rem;
+    }
+
+    .testimonial-author span {
+        font-size: 0.7rem;
+    }
+
+    /* Contact */
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .portal-visual {
+        width: 180px;
+        height: 180px;
     }
 
     .contact-content .section-header {
         text-align: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group label {
+        font-size: 0.6rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px 14px;
+        font-size: 0.85rem;
     }
 
     .btn-submit {
@@ -1897,32 +2128,164 @@ body {
         justify-content: center;
     }
 
-    .nav-inner {
-        padding: 0 20px;
+    .contact-links {
+        justify-content: center;
     }
 
+    /* Footer */
+    .footer-inner {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 0 16px;
+    }
+
+    .footer-brand {
+        font-size: 0.8rem;
+    }
+
+    .footer-copy {
+        font-size: 0.65rem;
+    }
+
+    /* Modal */
     .modal-content {
-        padding: 32px 24px;
+        padding: 24px 18px;
         width: 95%;
+        max-height: 85vh;
+    }
+
+    .modal-title {
+        font-size: 1.2rem;
+        padding-right: 32px;
+    }
+
+    .modal-desc {
+        font-size: 0.85rem;
+    }
+
+    .modal-results {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .result-item .result-number {
+        font-size: 1rem;
+    }
+
+    .result-item .result-label {
+        font-size: 0.6rem;
+    }
+
+    .modal-highlights li {
+        font-size: 0.8rem;
+    }
+
+    .modal-tech span {
+        font-size: 0.6rem;
+        padding: 4px 10px;
+    }
+
+    /* Rate Us */
+    .rate-us-container {
+        margin-top: 40px;
+        padding-top: 28px;
+    }
+
+    .rate-prompt {
+        font-size: 1rem;
+    }
+
+    .stars-widget {
+        font-size: 2rem;
+        gap: 8px;
+    }
+
+    #review-text {
+        max-width: 100%;
+    }
+
+    /* Intro */
+    .intro-line {
+        font-size: clamp(0.9rem, 4vw, 1.6rem);
+        padding: 0 16px;
+    }
+
+    .intro-planet {
+        width: 130px;
+        height: 130px;
+        margin: 30px auto 30px;
+    }
+
+    .planet-logo {
+        font-size: 1.8rem;
+    }
+
+    .intro-enter {
+        font-size: 0.75rem;
+        padding: 14px 32px;
     }
 }
 
+/* --- Small Mobile (max 480px) --- */
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2.2rem;
+        font-size: clamp(1.5rem, 8vw, 2.2rem);
+    }
+
+    .section-title {
+        font-size: clamp(1.2rem, 5vw, 1.6rem);
     }
 
     .skills-nodes {
         grid-template-columns: 1fr;
     }
 
-    .contact-links {
-        justify-content: center;
+    .intro-planet {
+        width: 100px;
+        height: 100px;
     }
 
-    .intro-planet {
-        width: 130px;
-        height: 130px;
+    .planet-logo {
+        font-size: 1.4rem;
+    }
+
+    .stat-card {
+        padding: 16px 20px;
+    }
+
+    .stat-number {
+        font-size: 1.6rem;
+    }
+
+    .achievement {
+        padding: 8px 14px;
+    }
+
+    .achievement-icon {
+        font-size: 1.2rem;
+    }
+
+    .achievement strong {
+        font-size: 0.75rem;
+    }
+
+    .achievement span {
+        font-size: 0.65rem;
+    }
+
+    .portal-visual {
+        width: 140px;
+        height: 140px;
+    }
+
+    .modal-results {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .btn {
+        font-size: 0.7rem;
+        padding: 12px 24px;
     }
 }
 
