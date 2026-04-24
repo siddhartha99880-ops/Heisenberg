@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Aniket Yadav &mdash; HeisenWorks Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F2EE;--ink:#0C0B09;--cobalt:#0047FF;--muted:#9B9890;--border:#E0DDD6;--green:#1DB954}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}body{font-family:'DM Sans',sans-serif;color:var(--ink);overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.04;pointer-events:none;z-index:9000;mix-blend-mode:multiply}
+::selection{background:var(--cobalt);color:#fff}
+.back-nav{position:fixed;top:0;left:0;right:0;z-index:8000;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;backdrop-filter:blur(8px);background:rgba(244,242,238,.6);transition:background .4s}
+.back-nav.dark{background:rgba(12,11,9,.8)}
+.back-nav.dark .back-link,.back-nav.dark .nav-brand{color:var(--paper)}
+.back-link{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .3s}
+.back-link:hover{color:var(--ink)}
+.nav-brand{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;transition:color .3s}
+.nav-brand span{background:var(--cobalt);color:#fff;padding:2px 8px;font-size:11px}
+/* HERO - light */
+.profile-hero{min-height:100vh;display:flex;align-items:flex-end;padding:120px 48px 80px;position:relative;overflow:hidden;background:var(--paper)}
+.profile-hero-content{position:relative;z-index:3;max-width:600px}
+.profile-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.profile-tag::before{content:'';width:28px;height:1px;background:var(--cobalt)}
+.profile-name{font-family:'Instrument Serif',serif;font-size:clamp(48px,6vw,80px);font-weight:400;line-height:1;margin-bottom:16px;letter-spacing:-.02em}
+.profile-name em{font-style:italic;color:var(--cobalt)}
+.profile-role{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:32px}
+.profile-bio{font-size:17px;font-weight:300;line-height:1.9;color:rgba(12,11,9,.6);max-width:520px}
+/* BB BACKGROUND AVATAR */
+.bb-bg{position:fixed;top:0;right:0;width:60vw;height:100vh;z-index:1;pointer-events:none;opacity:.35;transition:opacity .8s,filter .8s}
+.bb-bg img{width:100%;height:100%;object-fit:contain;object-position:right bottom;transition:transform 1.2s cubic-bezier(.16,1,.3,1),filter 1s}
+.bb-bg.phase1{opacity:.5}
+.bb-bg.phase1 img{filter:grayscale(60%) contrast(1.3);transform:scale(1.05) translateY(-10px)}
+.bb-bg.phase2{opacity:.6}
+.bb-bg.phase2 img{filter:grayscale(30%) contrast(1.4) brightness(0.8);transform:scale(1.12) translateY(-25px) rotate(2deg)}
+.bb-bg.phase3{opacity:.25}
+.bb-bg.phase3 img{filter:grayscale(80%) contrast(1.6) brightness(0.4);transform:scale(1.18) translateY(-40px) rotate(3deg)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,var(--paper) 30%,rgba(244,242,238,.7) 50%,transparent 75%);z-index:2;transition:background 1s}
+.hero-overlay.dark{background:linear-gradient(90deg,var(--ink) 30%,rgba(12,11,9,.85) 50%,rgba(12,11,9,.4) 75%)}
+/* TRANSITION ZONE */
+.transition-zone{height:200px;background:linear-gradient(to bottom,var(--paper),var(--ink));position:relative;z-index:1}
+/* DARK SECTIONS */
+.dark-area{background:var(--ink);color:var(--paper);position:relative;z-index:1}
+.section{padding:100px 48px;max-width:1200px;margin:0 auto}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:12px;margin-bottom:48px}
+.section-label::before{content:'';width:28px;height:1px;background:var(--cobalt)}
+.dark-area .section-label{color:rgba(244,242,238,.3)}
+.dark-area .section-label::before{background:rgba(244,242,238,.3)}
+/* SKILLS */
+.skills-list{display:flex;flex-wrap:wrap;gap:12px}
+.skill-pill{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;padding:10px 20px;border:1px solid rgba(244,242,238,.15);border-radius:100px;color:rgba(244,242,238,.6);transition:all .3s}
+.skill-pill:hover{background:var(--cobalt);color:#fff;border-color:var(--cobalt);transform:translateY(-2px)}
+/* DETAILS GRID */
+.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.detail-card{padding:32px;border:1px solid rgba(244,242,238,.08);transition:border-color .3s}
+.detail-card:hover{border-color:var(--cobalt)}
+.detail-card h3{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;margin-bottom:12px}
+.detail-card p{font-size:14px;font-weight:300;color:rgba(244,242,238,.45);line-height:1.8}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-bottom:80px}
+.stat-box{padding:32px 24px;border:1px solid rgba(244,242,238,.08);text-align:center}
+.stat-box .stat-n{font-family:'Instrument Serif',serif;font-size:48px;font-weight:400;display:block;margin-bottom:6px;color:var(--cobalt)}
+.stat-box .stat-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,242,238,.35)}
+/* QUOTE */
+.profile-quote{font-family:'Instrument Serif',serif;font-size:clamp(28px,3vw,42px);line-height:1.3;font-weight:400;font-style:italic;max-width:700px;padding-left:32px;border-left:3px solid var(--cobalt);color:var(--paper)}
+/* PROJECTS */
+.project-item{padding:40px 0;border-bottom:1px solid rgba(244,242,238,.07);display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start}
+.project-item:first-child{border-top:1px solid rgba(244,242,238,.07)}
+.proj-num{font-family:'Instrument Serif',serif;font-size:48px;color:transparent;-webkit-text-stroke:1px rgba(244,242,238,.15)}
+.proj-title{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;margin-bottom:8px}
+.proj-desc{font-size:14px;font-weight:300;color:rgba(244,242,238,.4);line-height:1.7}
+/* CTA */
+.profile-cta{padding:120px 48px;text-align:center}
+.cta-title{font-family:'Instrument Serif',serif;font-size:clamp(36px,4vw,56px);font-weight:400;margin-bottom:24px;color:var(--paper)}
+.cta-title em{font-style:italic;color:var(--cobalt)}
+.cta-btn{display:inline-flex;align-items:center;gap:14px;padding:18px 52px;border:1.5px solid var(--paper);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--paper);text-decoration:none;position:relative;overflow:hidden;transition:color .35s;margin-top:32px}
+.cta-btn::before{content:'';position:absolute;inset:0;background:var(--paper);transform:translateY(102%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.cta-btn:hover::before{transform:translateY(0)}.cta-btn:hover{color:var(--ink)}
+.cta-btn span{position:relative;z-index:1}
+footer{padding:32px 48px;border-top:1px solid rgba(244,242,238,.08);display:flex;justify-content:space-between;align-items:center;background:var(--ink)}
+footer span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:rgba(244,242,238,.3)}
+.rev{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rev.in{opacity:1;transform:translateY(0)}.rev-d1{transition-delay:.1s}.rev-d2{transition-delay:.2s}.rev-d3{transition-delay:.3s}.rev-d4{transition-delay:.4s}
+@media(max-width:768px){
+.profile-hero{padding:100px 24px 60px;min-height:auto}
+.section,.profile-cta{padding:60px 24px}
+.details-grid{grid-template-columns:1fr}.stats-row{grid-template-columns:1fr 1fr}
+.bb-bg{width:100vw;opacity:.15}
+.hero-overlay{background:linear-gradient(180deg,var(--paper) 40%,rgba(244,242,238,.5) 70%,transparent)!important}
+footer{padding:24px;flex-direction:column;gap:12px}
+.project-item{grid-template-columns:1fr}
+}
+</style></head><body>
+<div class="bb-bg" id="bbBg"><img src="avatar-aniket.png" alt=""></div>
+<nav class="back-nav" id="topNav">
+  <a href="index.html#team" class="back-link">&larr; Back to Team</a>
+  <a href="index.html" class="nav-brand">heisenworks<span>.studio</span></a>
+</nav>
+<div class="profile-hero" id="heroSection">
+  <div class="hero-overlay" id="heroOverlay"></div>
+  <div class="profile-hero-content">
+    <div class="profile-tag rev">Team Member</div>
+    <h1 class="profile-name rev rev-d1"><em>Aniket Yadav</em></h1>
+    <div class="profile-role rev rev-d2">Graphics Designer</div>
+    <p class="profile-bio rev rev-d3">Calm, calculated, and visually lethal. Aniket designs with the precision of Gus Fring running Los Pollos Hermanos - every pixel placed with purpose, every color chosen with intent. His graphics do not just look good; they communicate, persuade, and convert.</p>
+  </div>
+</div>
+<div class="transition-zone"></div>
+<div class="dark-area">
+  <div class="section">
+    <div class="stats-row rev">
+      <div class="stat-box"><span class="stat-n">3+</span><span class="stat-l">Years Exp</span></div>
+      <div class="stat-box"><span class="stat-n">100+</span><span class="stat-l">Designs Delivered</span></div>
+      <div class="stat-box"><span class="stat-n">12</span><span class="stat-l">Brand Systems</span></div>
+      <div class="stat-box"><span class="stat-n">500+</span><span class="stat-l">Social Assets</span></div>
+    </div>
+    <div class="section-label rev">Expertise</div>
+    <div class="skills-list rev rev-d1"><span class="skill-pill">Photoshop</span><span class="skill-pill">Illustrator</span><span class="skill-pill">Figma</span><span class="skill-pill">Brand Identity</span><span class="skill-pill">Typography</span><span class="skill-pill">Logo Design</span><span class="skill-pill">Print Design</span><span class="skill-pill">Social Media</span><span class="skill-pill">Packaging</span></div>
+  </div>
+  <div class="section">
+    <div class="section-label rev">About</div>
+    <div class="details-grid"><div class="detail-card rev"><h3>Background</h3><p>Formal design education with a self-taught mastery of digital tools. Started with poster design for college events, evolved into a brand identity specialist. Known for creating visual systems that are both beautiful and strategically aligned with business goals.</p></div><div class="detail-card rev rev-d1"><h3>Approach</h3><p>Research before pixels. Every design project begins with understanding the audience, the competition, and the emotional response needed. Aniket builds visual hierarchies that guide the eye naturally and brand systems that scale effortlessly across touchpoints.</p></div><div class="detail-card rev rev-d2"><h3>Specialization</h3><p>Brand identity systems, logo design, social media graphics, packaging design, and marketing collateral. Expert in creating cohesive visual languages that work across digital and print, maintaining consistency at every scale.</p></div><div class="detail-card rev rev-d3"><h3>Impact</h3><p>Designed the Cosmic Identity System spanning 200+ pages and 14 products. Created 500+ social media assets driving millions of impressions. Built brand guidelines adopted by entire organizations as their visual north star.</p></div></div>
+  </div>
+  <div class="section">
+    <div class="section-label rev">Philosophy</div>
+    <blockquote class="profile-quote rev rev-d1">A good design is like a good business - invisible effort, visible results, and impossible to ignore.</blockquote>
+  </div>
+  <div class="section">
+    <div class="section-label rev">Key Projects</div>
+    <div class="project-item rev"><div class="proj-num">01</div><div><div class="proj-title">Cosmic Identity System</div><div class="proj-desc">200+ page brand bible for a fintech company. Logo, typography, color system, iconography, and comprehensive guidelines. 62% brand consistency improvement.</div></div></div><div class="project-item rev rev-d1"><div class="proj-num">02</div><div><div class="proj-title">Nebula Brand Assets</div><div class="proj-desc">Complete visual identity including logo variations, social templates, presentation decks, and merchandise design. 340% increase in brand engagement.</div></div></div><div class="project-item rev rev-d2"><div class="proj-num">03</div><div><div class="proj-title">Social Media Design System</div><div class="proj-desc">Templated design system for 12 client brands. 500+ assets, automated Figma templates, consistent cross-platform presence.</div></div></div>
+  </div>
+  <div class="profile-cta rev">
+    <h2 class="cta-title">Want to work with<br><em>Aniket Yadav?</em></h2>
+    <a href="mailto:info@heisenworks.studio" class="cta-btn"><span>Get in touch</span><span>&rarr;</span></a>
+  </div>
+</div>
+<footer><span>&copy; 2025 heisenworks.studio</span><span>Built with intention</span></footer>
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('in')})},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+const bb=document.getElementById('bbBg'),nav=document.getElementById('topNav'),ov=document.getElementById('heroOverlay'),hero=document.getElementById('heroSection');
+window.addEventListener('scroll',()=>{const p=window.scrollY/window.innerHeight;
+bb.classList.remove('phase1','phase2','phase3');
+if(p>.8){bb.classList.add('phase3');nav.classList.add('dark');ov.classList.add('dark');hero.style.background='var(--ink)';}
+else if(p>.4){bb.classList.add('phase2');nav.classList.add('dark');ov.classList.add('dark');hero.style.background='var(--ink)';}
+else if(p>.15){bb.classList.add('phase1');nav.classList.remove('dark');ov.classList.remove('dark');hero.style.background='';}
+else{nav.classList.remove('dark');ov.classList.remove('dark');hero.style.background='';}
+},{passive:true});
+</script></body></html>
+

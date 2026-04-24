@@ -1,751 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HeisenWorks Creative Studio | Let's Cook</title>
-    <meta name="description" content="A global creative team pushing the boundaries of design, storytelling, and technology. Elite video editing, award-winning graphic design, and full-stack web development.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>heisenworks.studio — Software Studio</title>
+<meta name="description" content="HeisenWorks Creative Studio - A global creative team pushing the boundaries of design, storytelling, and technology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,200;0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F4F2EE;--ink:#0C0B09;--cobalt:#0047FF;--muted:#9B9890;--border:#E0DDD6;--green:#1DB954;--glow:rgba(0,71,255,0.15)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{background:var(--paper)}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);cursor:none;overflow-x:hidden}
+
+/* PROGRESS BAR */
+#progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cobalt),var(--green),var(--cobalt));z-index:9999;width:0%;transition:width .1s}
+
+/* GRAIN */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:9000;mix-blend-mode:multiply}
+
+/* CURSOR */
+#cur-dot{position:fixed;width:8px;height:8px;background:var(--ink);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:transform .1s}
+#cur-ring{position:fixed;width:36px;height:36px;border:1px solid var(--cobalt);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;opacity:.6}
+#cur-ring.hovered{width:56px;height:56px;opacity:1}
+.cursor-trail{position:fixed;width:4px;height:4px;background:var(--cobalt);border-radius:50%;pointer-events:none;z-index:99997;opacity:.6;transition:opacity .5s,transform .5s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:8000;display:flex;align-items:center;justify-content:space-between;padding:20px 48px;backdrop-filter:blur(8px);background:rgba(244,242,238,0.05)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:500;color:var(--ink)}
+.nav-logo span{background:var(--cobalt);color:#fff;padding:2px 8px;font-size:12px}
+.nav-right{display:flex;gap:36px;list-style:none}
+.nav-right a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative}
+.nav-right a:hover{color:var(--ink)}
+.nav-right a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cobalt);transition:width .3s}
+.nav-right a:hover::after{width:100%}
+
+/* HERO */
+#hero-pin{position:relative;height:300vh}
+#hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
+#hero-frame{position:absolute;inset:0;overflow:hidden;transform-origin:center;background:#080604}
+#hero-art{position:absolute;top:0;left:0;width:200%;height:100%;will-change:transform}
+.art-canvas{width:100%;height:100%;position:relative;background:linear-gradient(180deg,#050302 0%,#0d0806 40%,#1a0f08 70%,#0a0604 100%);overflow:hidden}
+#katana-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
+.art-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,71,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,71,255,0.05) 1px,transparent 1px);background-size:100px 100px;animation:gridBreath 8s ease-in-out infinite}
+@keyframes gridBreath{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* SCAN */
+.hero-scan-lines{position:absolute;inset:0;z-index:15;pointer-events:none;overflow:hidden}
+.scan-beam{position:absolute;left:-80%;height:1px;background:linear-gradient(to right,transparent 0%,rgba(0,71,255,0) 5%,rgba(0,71,255,0.5) 30%,rgba(100,170,255,1) 50%,rgba(255,255,255,0.9) 55%,rgba(0,71,255,0.5) 70%,transparent 100%);width:55%;filter:blur(0.4px);animation:scanH 5s cubic-bezier(.4,0,.2,1) infinite}
+.scan-beam:nth-child(1){top:18%;animation-delay:0s;animation-duration:5.2s}
+.scan-beam:nth-child(2){top:43%;animation-delay:1.9s;animation-duration:4.6s;height:1.5px}
+.scan-beam:nth-child(3){top:67%;animation-delay:3.5s;animation-duration:5.8s}
+.scan-beam:nth-child(4){top:31%;animation-delay:0.8s;animation-duration:7s;width:35%;opacity:.5}
+.scan-beam:nth-child(5){top:78%;animation-delay:2.6s;animation-duration:4.2s;opacity:.4}
+@keyframes scanH{0%{left:-60%;opacity:0}4%{opacity:1}92%{opacity:1}100%{left:115%;opacity:0}}
+.scan-col{position:absolute;top:-60%;width:1px;height:55%;background:linear-gradient(to bottom,transparent,rgba(0,71,255,0.4),rgba(100,170,255,0.9),rgba(255,255,255,0.5),rgba(0,71,255,0.3),transparent);filter:blur(0.3px);animation:scanV 7s cubic-bezier(.4,0,.2,1) infinite}
+.scan-col:nth-child(6){left:28%;animation-delay:2.1s;animation-duration:7.5s}
+.scan-col:nth-child(7){left:62%;animation-delay:4.4s;animation-duration:6s;opacity:.6}
+.scan-col:nth-child(8){left:78%;animation-delay:1s;animation-duration:8.5s;opacity:.4}
+@keyframes scanV{0%{top:-60%;opacity:0}6%{opacity:1}90%{opacity:1}100%{top:120%;opacity:0}}
+.scan-spark{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;box-shadow:0 0 6px 3px rgba(0,71,255,.9),0 0 16px 6px rgba(0,71,255,.4);pointer-events:none;animation:sparkFade .7s ease forwards}
+@keyframes sparkFade{0%{transform:scale(0);opacity:1}40%{transform:scale(2);opacity:.8}100%{transform:scale(0.5);opacity:0}}
+.code-particle{position:absolute;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,71,255,0.22);white-space:nowrap;pointer-events:none;animation:codeFloat linear infinite}
+@keyframes codeFloat{from{transform:translateY(0) translateX(0);opacity:.22}50%{opacity:.35}to{transform:translateY(-60px) translateX(20px);opacity:0}}
+
+/* HERO TEXT */
+#hero-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:25;pointer-events:none}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,242,238,.3);margin-bottom:24px;opacity:0;animation:fadeUp .7s cubic-bezier(.16,1,.3,1) .25s forwards}
+.hero-h1{font-family:'Instrument Serif',serif;font-size:clamp(54px,7.5vw,112px);line-height:.93;font-weight:400;text-align:center;color:#F4F2EE;letter-spacing:-.025em;text-shadow:0 2px 60px rgba(0,0,0,.7)}
+.hero-h1 .line{display:block;overflow:hidden}
+.hero-h1 .line span{display:block;transform:translateY(110%);animation:lineUp .9s cubic-bezier(.16,1,.3,1) forwards}
+.hero-h1 .line:nth-child(1) span{animation-delay:.15s}
+.hero-h1 .line:nth-child(2) span{animation-delay:.3s}
+.hero-h1 .line:nth-child(3) span{animation-delay:.45s}
+.hero-h1 em{font-style:italic;color:#7BA7FF}
+.hero-sub{font-size:14px;font-weight:300;color:rgba(244,242,238,.45);margin-top:28px;opacity:0;animation:fadeUp .7s .8s forwards}
+.hero-scroll-hint{position:absolute;bottom:32px;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn .6s 1.3s forwards}
+.hero-scroll-hint span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,242,238,.25)}
+.scroll-bar{width:1px;height:44px;background:linear-gradient(to bottom,rgba(0,71,255,.8),transparent);animation:scrollPulse 2s ease-in-out infinite}
+#page-reveal{position:absolute;bottom:0;left:0;right:0;height:0%;background:var(--paper);z-index:30}
+
+/* SCREEN SHAKE */
+@keyframes screenShake{0%{transform:translate(0,0)}25%{transform:translate(-3px,2px)}50%{transform:translate(2px,-3px)}75%{transform:translate(-2px,1px)}100%{transform:translate(0,0)}}
+.shake{animation:screenShake .15s ease}
+
+/* INTRO */
+#intro{background:var(--paper);padding:100px 48px 60px;position:relative;overflow:hidden}
+.intro-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:5fr 7fr;gap:80px;align-items:start}
+.intro-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:12px;margin-bottom:32px}
+.intro-tag::before{content:'';width:28px;height:1px;background:var(--cobalt)}
+.intro-left-num{font-family:'Instrument Serif',serif;font-size:180px;font-weight:400;line-height:1;color:rgba(12,11,9,.04);position:absolute;left:-20px;top:60px;pointer-events:none}
+.intro-headline{font-family:'Instrument Serif',serif;font-size:clamp(36px,3.5vw,56px);line-height:1.12;font-weight:400}
+.intro-headline em{font-style:italic;color:var(--cobalt)}
+.intro-body{display:flex;flex-direction:column;gap:28px}
+.intro-body p{font-size:16px;font-weight:300;line-height:1.85;color:rgba(12,11,9,.6)}
+
+/* TERMINAL */
+.terminal-block{background:#0C0B09;border:1px solid rgba(0,71,255,.2);padding:24px;font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(0,71,255,.7);margin-top:32px;position:relative;overflow:hidden}
+.terminal-block::before{content:'● ● ●';display:block;color:var(--muted);font-size:8px;letter-spacing:4px;margin-bottom:16px}
+.terminal-line{opacity:0;transform:translateX(-10px);transition:opacity .4s,transform .4s}
+.terminal-line.visible{opacity:1;transform:translateX(0)}
+
+/* CRAWL */
+.crawl-text-section{padding:70px 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.crawl-track{display:flex;gap:64px;white-space:nowrap;will-change:transform}
+.crawl-track.reverse{animation:crawlReverse 22s linear infinite}
+.crawl-track.forward{animation:crawlForward 22s linear infinite}
+.crawl-track span{font-family:'Instrument Serif',serif;font-size:clamp(72px,10vw,140px);font-weight:400;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--ink);letter-spacing:-.02em;flex-shrink:0}
+.crawl-track span.filled{-webkit-text-stroke:none;color:var(--ink)}
+.crawl-track span.blue{-webkit-text-stroke:1.5px var(--cobalt)}
+@keyframes crawlForward{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes crawlReverse{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* TEAM */
+#team{padding:140px 48px;background:var(--paper);border-top:1px solid var(--border)}
+.team-header{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.team-header::before{content:'';width:28px;height:1px;background:var(--cobalt)}
+.team-title{font-family:'Instrument Serif',serif;font-size:clamp(36px,4vw,56px);font-weight:400;margin-bottom:80px}
+.team-title em{font-style:italic;color:var(--cobalt)}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1400px;margin:0 auto}
+.team-card{background:#fff;border:1px solid var(--border);padding:40px 32px;text-align:center;position:relative;overflow:hidden;transition:all .4s cubic-bezier(.16,1,.3,1)}
+.team-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,71,255,.03),transparent);opacity:0;transition:opacity .4s}
+.team-card:hover{border-color:var(--ink);box-shadow:8px 8px 0 var(--ink);transform:translateY(-8px)}
+.team-card:hover::after{opacity:1}
+.team-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--cobalt),var(--green));margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-family:'Instrument Serif',serif;font-size:28px;color:#fff;transition:transform .6s}
+.team-card:hover .team-avatar{transform:scale(1.1) rotate(5deg)}
+.team-name{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;margin-bottom:8px;transition:color .3s}
+.team-card:hover .team-name{color:var(--cobalt)}
+.team-role{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* WORK CARDS */
+#work{padding:140px 48px 160px;background:var(--paper);position:relative;min-height:180vh}
+.work-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.work-label::before{content:'';width:28px;height:1px;background:var(--cobalt)}
+.work-title{font-family:'Instrument Serif',serif;font-size:clamp(36px,4vw,56px);font-weight:400;margin-bottom:80px}
+.work-title em{font-style:italic;color:var(--cobalt)}
+.work-cards-scene{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1400px;margin:0 auto}
+.wcard{background:#fff;border:1px solid var(--border);padding:40px;transition:box-shadow .4s,border-color .4s,transform .5s;position:relative;overflow:hidden;opacity:0;transform:translateY(60px) scale(.94)}
+.wcard.in{opacity:1;transform:translateY(0) scale(1)}
+.wcard:hover{border-color:var(--ink);box-shadow:8px 8px 0 var(--ink);z-index:10}
+.wcard:hover .wcard-title{color:var(--cobalt)}
+.wcard::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.025;pointer-events:none}
+.wcard-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;display:flex;justify-content:space-between;margin-bottom:40px}
+.wcard-title{font-family:'Instrument Serif',serif;font-size:36px;font-weight:400;line-height:1.05;margin-bottom:14px;transition:color .25s}
+.wcard-desc{font-size:13px;font-weight:300;color:rgba(12,11,9,.5);line-height:1.7;margin-bottom:28px}
+.wcard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:32px}
+.wtag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--border);padding:4px 10px;border-radius:100px;color:var(--muted)}
+.wcard-link{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s,gap .2s}
+.wcard:hover .wcard-link{color:var(--ink);gap:14px}
+
+/* SKILLS */
+#skills{padding:140px 48px;background:var(--ink);color:var(--paper);overflow:hidden}
+.skills-header{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,242,238,.3);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.skills-header::before{content:'';width:28px;height:1px;background:rgba(244,242,238,.3)}
+.skills-title{font-family:'Instrument Serif',serif;font-size:clamp(36px,4vw,56px);font-weight:400;margin-bottom:80px}
+.skills-title em{font-style:italic;color:#7BA7FF}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1200px;margin:0 auto}
+.skill-node{padding:48px 32px;border:1px solid rgba(244,242,238,.08);position:relative;transition:all .4s;overflow:hidden}
+.skill-node::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--cobalt);transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.skill-node:hover::before{transform:scaleX(1)}
+.skill-node:hover{background:rgba(0,71,255,.06);border-color:rgba(0,71,255,.2)}
+.skill-name{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;margin-bottom:12px}
+.skill-tools{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(244,242,238,.35);letter-spacing:.05em}
+
+/* 3D LOGO */
+#logo3d-section{padding:120px 48px;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;border-top:1px solid var(--border);overflow:hidden}
+.logo3d-wrap{position:relative;width:120px;height:120px;perspective:600px}
+.logo3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;animation:spin3d 8s linear infinite}
+.logo-face{position:absolute;width:100px;height:100px;left:10px;top:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--ink);background:var(--paper);font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:500;color:var(--ink);backface-visibility:hidden}
+.logo-face.f-front{transform:translateZ(50px)}
+.logo-face.f-back{transform:rotateY(180deg) translateZ(50px);color:var(--cobalt);border-color:var(--cobalt)}
+.logo-face.f-right{transform:rotateY(90deg) translateZ(50px);font-size:14px}
+.logo-face.f-left{transform:rotateY(-90deg) translateZ(50px);font-size:14px}
+.logo-face.f-top{transform:rotateX(90deg) translateZ(50px)}
+.logo-face.f-bot{transform:rotateX(-90deg) translateZ(50px)}
+@keyframes spin3d{from{transform:rotateX(-15deg) rotateY(0deg)}to{transform:rotateX(-15deg) rotateY(360deg)}}
+.logo3d-tagline{font-family:'Instrument Serif',serif;font-size:clamp(24px,3vw,40px);font-weight:400;font-style:italic;text-align:center}
+.logo3d-sub{font-family:'DM Sans',sans-serif;font-size:14px;font-weight:300;color:var(--muted);text-align:center;max-width:400px}
+
+/* STUDIO */
+#studio{padding:160px 48px;background:var(--paper);border-top:1px solid var(--border)}
+.studio-wrap{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.studio-left-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:12px;margin-bottom:48px}
+.studio-left-label::before{content:'';width:28px;height:1px;background:var(--cobalt)}
+.studio-quote{font-family:'Instrument Serif',serif;font-size:clamp(28px,2.5vw,42px);line-height:1.2;font-weight:400;margin-bottom:40px}
+.studio-quote em{font-style:italic;color:var(--cobalt)}
+.studio-body p{font-size:15px;font-weight:300;line-height:1.85;color:rgba(12,11,9,.6);margin-bottom:24px}
+.studio-stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--border);margin-top:56px}
+.stat{padding:28px 24px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Instrument Serif',serif;font-size:52px;font-weight:400;line-height:1;display:block;margin-bottom:6px}
+.stat-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.studio-right-visual{position:relative;height:500px}
+.studio-orb{position:absolute;border-radius:50%;border:1px solid var(--border)}
+.studio-orb:nth-child(1){width:320px;height:320px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.studio-orb:nth-child(2){width:220px;height:220px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.studio-orb:nth-child(3){width:120px;height:120px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.studio-center-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;background:var(--cobalt);border-radius:50%;animation:dotPulse 3s ease-in-out infinite}
+.studio-info-pill{position:absolute;background:var(--ink);color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;white-space:nowrap}
+.studio-info-pill:nth-child(5){top:10%;left:5%}
+.studio-info-pill:nth-child(6){top:30%;right:0;background:var(--cobalt)}
+.studio-info-pill:nth-child(7){bottom:20%;left:8%}
+.studio-info-pill:nth-child(8){bottom:10%;right:5%}
+@keyframes dotPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(2);opacity:.4}}
+
+/* PROCESS */
+#process{padding:120px 48px 160px;background:var(--ink);color:var(--paper);overflow:hidden}
+.process-header{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,242,238,.3);display:flex;align-items:center;gap:12px;margin-bottom:100px}
+.process-header::before{content:'';width:28px;height:1px;background:rgba(244,242,238,.3)}
+.process-row{display:grid;grid-template-columns:auto 1fr;gap:40px 64px;align-items:start;padding:64px 0;border-top:1px solid rgba(244,242,238,.07);position:relative}
+.process-row:last-child{border-bottom:1px solid rgba(244,242,238,.07)}
+.process-giant-num{font-family:'Instrument Serif',serif;font-size:clamp(80px,10vw,140px);line-height:1;font-weight:400;color:transparent;-webkit-text-stroke:1px rgba(244,242,238,.2);transition:-webkit-text-stroke .4s,color .4s}
+.process-row:hover .process-giant-num{-webkit-text-stroke:1px var(--cobalt)}
+.process-content{padding-top:16px}
+.process-title{font-family:'Instrument Serif',serif;font-size:clamp(28px,3vw,42px);font-weight:400;margin-bottom:16px;transition:color .3s}
+.process-row:hover .process-title{color:#7BA7FF}
+.process-desc{font-size:14px;font-weight:300;color:rgba(244,242,238,.4);line-height:1.8;max-width:560px}
+
+/* TESTIMONIALS */
+#testimonials{padding:140px 48px;background:var(--paper);border-top:1px solid var(--border);overflow:hidden}
+.test-header{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cobalt);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.test-header::before{content:'';width:28px;height:1px;background:var(--cobalt)}
+.test-title{font-family:'Instrument Serif',serif;font-size:clamp(36px,4vw,56px);font-weight:400;margin-bottom:80px}
+.test-title em{font-style:italic;color:var(--cobalt)}
+.test-track{display:flex;gap:32px;animation:testimonialScroll 30s linear infinite}
+.test-card{min-width:400px;padding:40px;border:1px solid var(--border);background:#fff;flex-shrink:0}
+.test-card p{font-size:15px;font-weight:300;line-height:1.8;color:rgba(12,11,9,.6);font-style:italic;margin-bottom:20px}
+.test-card .test-author{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt)}
+@keyframes testimonialScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* CONTACT */
+#contact{padding:200px 48px 160px;background:var(--paper);border-top:1px solid var(--border);position:relative;overflow:hidden}
+.contact-bg-text{position:absolute;font-family:'Instrument Serif',serif;font-size:clamp(120px,16vw,220px);font-weight:400;color:transparent;-webkit-text-stroke:1px rgba(12,11,9,.04);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.contact-inner{max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:2}
+.contact-h{font-family:'Instrument Serif',serif;font-size:clamp(56px,7vw,104px);line-height:.95;font-weight:400;letter-spacing:-.02em;margin-bottom:32px}
+.contact-h em{font-style:italic;color:var(--cobalt)}
+.contact-sub{font-size:15px;font-weight:300;color:var(--muted);margin-bottom:64px}
+#mag-wrap{display:inline-block;position:relative;cursor:none}
+#mag-btn{display:inline-flex;align-items:center;gap:14px;padding:18px 52px;border:1.5px solid var(--ink);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;position:relative;overflow:hidden;transition:color .35s}
+#mag-btn::before{content:'';position:absolute;inset:0;background:var(--ink);transform:translateY(102%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+#mag-btn:hover::before{transform:translateY(0)}
+#mag-btn:hover{color:var(--paper)}
+#mag-btn span{position:relative;z-index:1}
+.contact-email{display:block;margin-top:32px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-decoration:none;transition:color .2s}
+.contact-email:hover{color:var(--cobalt)}
+
+/* FOOTER */
+footer{padding:32px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+footer span{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--muted)}
+.status-dot{display:inline-flex;align-items:center;gap:6px;color:#3DBA75 !important}
+.status-dot::before{content:'';width:6px;height:6px;background:#3DBA75;border-radius:50%;animation:statusBlink 2.5s ease-in-out infinite}
+@keyframes statusBlink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ANIMATIONS */
+@keyframes lineUp{to{transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.15)}}
+.rev{opacity:0;transform:translateY(48px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.rev.in{opacity:1;transform:translateY(0)}
+.rev-d1{transition-delay:.1s}.rev-d2{transition-delay:.2s}.rev-d3{transition-delay:.3s}.rev-d4{transition-delay:.4s}
+
+/* TEXT GRADIENT */
+.gradient-text{background:linear-gradient(90deg,var(--ink),var(--cobalt),var(--green),var(--cobalt),var(--ink));background-size:300% 100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientMove 6s linear infinite}
+@keyframes gradientMove{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+
+/* GLITCH */
+.glitch-text{position:relative;display:inline-block}
+.glitch-text:hover{animation:glitch .4s steps(2,end) infinite}
+@keyframes glitch{0%{clip-path:inset(0 0 100% 0)}20%{clip-path:inset(30% 0 50% 0);transform:translate(-2px,0)}40%{clip-path:inset(60% 0 20% 0);transform:translate(2px,0);color:#7BA7FF}60%{clip-path:inset(10% 0 70% 0);transform:translate(0,0)}80%{clip-path:inset(80% 0 5% 0);transform:translate(-1px,0)}100%{clip-path:inset(0 0 0 0);transform:translate(0,0);color:inherit}}
+
+::selection{background:var(--cobalt);color:#fff}
+::-webkit-scrollbar{display:none}
+*{scrollbar-width:none}
+
+/* MOBILE */
+@media(max-width:768px){
+#cur-dot,#cur-ring,.cursor-trail{display:none}
+nav{padding:16px 24px}
+.nav-right{display:none}
+.intro-inner{grid-template-columns:1fr;gap:40px}
+.team-grid{grid-template-columns:1fr}
+.work-cards-scene{grid-template-columns:1fr}
+.wcard{position:relative!important;width:100%!important;margin-bottom:24px}
+.skills-grid{grid-template-columns:1fr}
+.studio-wrap{grid-template-columns:1fr}
+.studio-right-visual{height:300px}
+.process-row{grid-template-columns:1fr;gap:16px}
+.process-giant-num{font-size:60px}
+.test-card{min-width:280px}
+#contact,#studio,#process,#intro,#work,#team,#skills,#testimonials{padding:80px 24px}
+.crawl-track span{font-size:56px}
+footer{padding:24px;flex-direction:column;gap:12px}
+.studio-stats{grid-template-columns:1fr}
+.stat{border-right:none;border-bottom:1px solid var(--border)}
+}
+/* CASE STUDY RESULTS */
+.wcard-case{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cobalt);line-height:1.7;padding:16px 0;margin-bottom:16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.wcard-case strong{color:var(--ink);font-weight:500}
+/* TEAM LINKS */
+.team-card{cursor:pointer}
+.team-card a{text-decoration:none;color:inherit;display:block}
+.team-link{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s,gap .2s}
+.team-card:hover .team-link{color:var(--cobalt);gap:12px}
+</style>
 </head>
+
 <body>
-    <!-- Three.js Canvas Container -->
-    <div id="canvas-container"></div>
+<div id="progress-bar"></div>
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
 
-    <!-- ============ CINEMATIC INTRO ============ -->
-    <div id="intro-overlay">
-        <div class="intro-content">
-            <p class="intro-line intro-line-1">Let's Cook.</p>
-            <p class="intro-line intro-line-2">We are the ones who knock.</p>
-            <div class="intro-planet">
-                <div class="planet-core"></div>
-                <div class="planet-ring ring-1"></div>
-                <div class="planet-ring ring-2"></div>
-                <div class="planet-glow"></div>
-                <span class="planet-logo">BrBa</span>
-            </div>
-            <button class="intro-enter" id="enter-btn">
-                <span class="btn-text">Enter the Lab</span>
-                <span class="btn-glow"></span>
-            </button>
+<nav>
+  <a href="#" class="nav-logo">heisenworks<span>.studio</span></a>
+  <ul class="nav-right">
+    <li><a href="#team">Team</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#studio">Studio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero-pin">
+  <div id="hero-sticky">
+    <div id="hero-frame">
+      <div id="hero-art">
+        <div class="art-canvas">
+          <div class="art-grid"></div>
+          <svg id="hero-svg" style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <filter id="blur2"><feGaussianBlur stdDeviation="6"/></filter>
+              <filter id="blur3"><feGaussianBlur stdDeviation="14"/></filter>
+              <radialGradient id="glow1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#0047FF" stop-opacity="0.18"/><stop offset="100%" stop-color="#0047FF" stop-opacity="0"/></radialGradient>
+              <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#1DB954" stop-opacity="0.08"/><stop offset="100%" stop-color="#1DB954" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="800" cy="450" rx="700" ry="380" fill="url(#glow1)" filter="url(#blur3)"/>
+            <ellipse cx="400" cy="700" rx="300" ry="200" fill="url(#glowGreen)" filter="url(#blur2)"/>
+            <path d="M0,650 Q200,480 420,560 Q640,640 860,500 Q1080,360 1280,520 Q1440,610 1600,560 L1600,900 L0,900 Z" fill="#070503" opacity="0.95"/>
+            <path d="M0,700 Q320,580 640,660 Q960,740 1280,620 Q1440,570 1600,630 L1600,900 L0,900 Z" fill="#040302"/>
+            <g opacity="0.14" stroke="#0047FF" stroke-width="0.6" fill="none">
+              <line x1="100" y1="0" x2="100" y2="900"/><line x1="300" y1="0" x2="300" y2="900"/>
+              <line x1="500" y1="0" x2="500" y2="900"/><line x1="700" y1="0" x2="700" y2="900"/>
+              <line x1="900" y1="0" x2="900" y2="900"/><line x1="1100" y1="0" x2="1100" y2="900"/>
+              <line x1="0" y1="150" x2="1600" y2="150"/><line x1="0" y1="300" x2="1600" y2="300"/>
+              <line x1="0" y1="450" x2="1600" y2="450"/><line x1="0" y1="600" x2="1600" y2="600"/>
+            </g>
+            <text x="110" y="160" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.22">const observe = (x) =&gt; x.map(adapt);</text>
+            <text x="920" y="220" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.18">fn ship(system: &amp;System) -&gt; Result;</text>
+            <text x="300" y="340" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.14">SELECT * FROM systems WHERE deadline = NULL;</text>
+            <text x="200" y="480" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.11">await Promise.all([think, ship, iterate]);</text>
+            <text x="720" y="395" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.16">impl Heisenberg for Software { fn observe() }</text>
+            <text x="60" y="520" font-family="JetBrains Mono" font-size="11" fill="#1DB954" opacity="0.12">// precision over velocity</text>
+            <g id="nodeNet">
+              <circle cx="100" cy="300" r="3.5" fill="#0047FF" opacity="0.55"/>
+              <circle cx="400" cy="200" r="3" fill="#0047FF" opacity="0.45"/>
+              <circle cx="700" cy="420" r="4.5" fill="#0047FF" opacity="0.65"/>
+              <circle cx="1000" cy="310" r="3.5" fill="#0047FF" opacity="0.45"/>
+              <circle cx="1300" cy="210" r="3" fill="#0047FF" opacity="0.4"/>
+              <circle cx="550" cy="520" r="2.5" fill="#0047FF" opacity="0.5"/>
+              <circle cx="1450" cy="350" r="3" fill="#1DB954" opacity="0.4"/>
+              <line x1="100" y1="300" x2="400" y2="200" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
+              <line x1="400" y1="200" x2="700" y2="420" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
+              <line x1="700" y1="420" x2="1000" y2="310" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
+              <line x1="1000" y1="310" x2="1300" y2="210" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
+            </g>
+            <ellipse cx="800" cy="420" rx="220" ry="140" fill="url(#glow1)" filter="url(#blur2)"/>
+          </svg>
+          <canvas id="katana-canvas"></canvas>
         </div>
-        <div class="intro-particles"></div>
+      </div>
     </div>
-
-    <!-- ============ NAVIGATION ============ -->
-    <nav id="main-nav">
-        <div class="nav-inner">
-            <a href="#hero" class="nav-logo">
-                <span class="logo-icon">BrBa</span>
-                <span class="logo-text">Empire</span>
-            </a>
-            <div class="nav-links">
-                <a href="#hero" class="nav-link active" data-section="hero">Home</a>
-                <a href="#team" class="nav-link" data-section="team">Team</a>
-                <a href="#projects" class="nav-link" data-section="projects">Galaxy</a>
-                <a href="#skills" class="nav-link" data-section="skills">Skills</a>
-                <a href="#testimonials" class="nav-link" data-section="testimonials">Impact</a>
-                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
-            </div>
-            <a href="#contact" class="nav-cta">Launch Project</a>
-            <button class="nav-mobile-toggle" id="mobile-toggle" aria-label="Toggle menu">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </nav>
-
-    <!-- ============ MAIN CONTENT ============ -->
-    <main id="main-content">
-
-        <!-- ======== HERO SECTION ======== -->
-        <section id="hero" class="section">
-            <div class="section-inner">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    <span>Meth Lab • Est. 2008</span>
-                </div>
-                <h1 class="hero-title">
-                    <span class="title-line">The</span>
-                    <span class="title-line title-accent">HeisenWorks</span>
-                    <span class="title-line">Studio</span>
-                </h1>
-                <p class="hero-subtitle">A global creative team pushing the boundaries of design, storytelling, and technology.</p>
-
-                <div class="hero-achievements">
-                    <div class="achievement">
-                        <span class="achievement-icon">⭐</span>
-                        <div>
-                            <strong>4.6 / 5</strong>
-                            <span>International Client Rating</span>
-                        </div>
-                    </div>
-                    <div class="achievement">
-                        <span class="achievement-icon">🏆</span>
-                        <div>
-                            <strong>State Award</strong>
-                            <span>Los Angeles, CA</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hero-stats">
-                    <div class="stat-card" data-count="200">
-                        <div class="stat-number">200<span class="stat-plus">+</span></div>
-                        <div class="stat-label">Projects Delivered</div>
-                        <div class="stat-glow"></div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">30<span class="stat-plus">+</span></div>
-                        <div class="stat-label">Global Clients</div>
-                        <div class="stat-glow"></div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">12</div>
-                        <div class="stat-label">Creative Specialists</div>
-                        <div class="stat-glow"></div>
-                    </div>
-                </div>
-
-                <div class="hero-cta-group">
-                    <a href="#projects" class="btn btn-primary">
-                        <span>Explore Our Galaxy</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    </a>
-                    <a href="#contact" class="btn btn-ghost">Get In Touch</a>
-                </div>
-            </div>
-            <div class="hero-scroll-indicator">
-                <div class="scroll-line"></div>
-                <span>Scroll to Explore</span>
-            </div>
-        </section>
-
-        <!-- ======== TEAM DIMENSION ======== -->
-        <section id="team" class="section">
-            <div class="section-inner">
-                <div class="section-header">
-                    <span class="section-tag">// TEAM DIMENSION</span>
-                    <h2 class="section-title">Meet the <span class="gradient-text">Cooks</span></h2>
-                    <p class="section-desc">Each specialist brings a unique 99.1% pure creative force to the empire.</p>
-                </div>
-
-                <div class="team-grid">
-                    <!-- Fahad -->
-                    <div class="team-card" data-role="founder">
-                        <div class="card-hologram">
-                            <div class="card-avatar">
-                                <img class="avatar-img" src="avatar_fahad.png" alt="Fahad">
-                                <div class="avatar-ring"></div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Fahad</h3>
-                                <span class="card-role">Founder</span>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Experience</span>
-                                    <span class="detail-value">3+ Years</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Specialty</span>
-                                    <span class="detail-value">Web Design & Management</span>
-                                </div>
-                                <div class="card-skills">
-                                    <span class="skill-tag">Web Design</span>
-                                    <span class="skill-tag">Project Management</span>
-                                    <span class="skill-tag">Team Leadership</span>
-                                </div>
-                                <div class="card-highlight">Designed & managed 50+ client web projects</div>
-                            </div>
-                        </div>
-                        <div class="card-glow"></div>
-                    </div>
-
-                    <!-- Siddhartha -->
-                    <div class="team-card" data-role="ceo">
-                        <div class="card-hologram">
-                            <div class="card-avatar">
-                                <img class="avatar-img" src="avatar_siddhartha.png" alt="Siddhartha">
-                                <div class="avatar-ring"></div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Siddhartha</h3>
-                                <span class="card-role">CEO</span>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Experience</span>
-                                    <span class="detail-value">2+ Years</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Specialty</span>
-                                    <span class="detail-value">AI Automation & Leadership</span>
-                                </div>
-                                <div class="card-skills">
-                                    <span class="skill-tag">AI Automation</span>
-                                    <span class="skill-tag">Strategic Leadership</span>
-                                    <span class="skill-tag">Business Operations</span>
-                                </div>
-                                <div class="card-highlight">Pioneering AI-driven creative workflows</div>
-                            </div>
-                        </div>
-                        <div class="card-glow"></div>
-                    </div>
-
-                    <!-- Siddharth Sahu -->
-                    <div class="team-card" data-role="video">
-                        <div class="card-hologram">
-                            <div class="card-avatar">
-                                <img class="avatar-img" src="avatar_siddharth_sahu.png" alt="Siddharth Sahu">
-                                <div class="avatar-ring"></div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Siddharth Sahu</h3>
-                                <span class="card-role">Lead Video Editor</span>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Experience</span>
-                                    <span class="detail-value">2+ Years</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Specialty</span>
-                                    <span class="detail-value">Video Editing</span>
-                                </div>
-                                <div class="card-skills">
-                                    <span class="skill-tag">Premiere Pro</span>
-                                    <span class="skill-tag">After Effects</span>
-                                    <span class="skill-tag">DaVinci Resolve</span>
-                                </div>
-                                <div class="card-highlight">Edited 100+ cinematic videos</div>
-                            </div>
-                        </div>
-                        <div class="card-glow"></div>
-                    </div>
-
-                    <!-- Tanisha -->
-                    <div class="team-card" data-role="dev">
-                        <div class="card-hologram">
-                            <div class="card-avatar">
-                                <img class="avatar-img" src="avatar_tanisha.png" alt="Tanisha">
-                                <div class="avatar-ring"></div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Tanisha</h3>
-                                <span class="card-role">Lead Developer</span>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Experience</span>
-                                    <span class="detail-value">2+ Years</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Specialty</span>
-                                    <span class="detail-value">Web Applications</span>
-                                </div>
-                                <div class="card-skills">
-                                    <span class="skill-tag">React</span>
-                                    <span class="skill-tag">Node.js</span>
-                                    <span class="skill-tag">Three.js</span>
-                                </div>
-                                <div class="card-highlight">Built 50+ production web applications</div>
-                            </div>
-                        </div>
-                        <div class="card-glow"></div>
-                    </div>
-
-                    <!-- Aniket Yadav -->
-                    <div class="team-card" data-role="design">
-                        <div class="card-hologram">
-                            <div class="card-avatar">
-                                <img class="avatar-img" src="avatar_aniket.png" alt="Aniket Yadav">
-                                <div class="avatar-ring"></div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Aniket Yadav</h3>
-                                <span class="card-role">Lead Designer</span>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Experience</span>
-                                    <span class="detail-value">3+ Years</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Specialty</span>
-                                    <span class="detail-value">Graphic Design</span>
-                                </div>
-                                <div class="card-skills">
-                                    <span class="skill-tag">Figma</span>
-                                    <span class="skill-tag">Photoshop</span>
-                                    <span class="skill-tag">Illustrator</span>
-                                </div>
-                                <div class="card-highlight">Crafted 100+ stunning visual identities</div>
-                            </div>
-                        </div>
-                        <div class="card-glow"></div>
-                    </div>
-
-                    <!-- Tanushi -->
-                    <div class="team-card" data-role="pm">
-                        <div class="card-hologram">
-                            <div class="card-avatar">
-                                <img class="avatar-img" src="avatar_tanushi.png" alt="Tanushi">
-                                <div class="avatar-ring"></div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Tanushi</h3>
-                                <span class="card-role">Lead Project Manager</span>
-                            </div>
-                            <div class="card-details">
-                                <div class="detail-item">
-                                    <span class="detail-label">Experience</span>
-                                    <span class="detail-value">2+ Years</span>
-                                </div>
-                                <div class="detail-item">
-                                    <span class="detail-label">Specialty</span>
-                                    <span class="detail-value">Management & Leadership</span>
-                                </div>
-                                <div class="card-skills">
-                                    <span class="skill-tag">Project Management</span>
-                                    <span class="skill-tag">Team Leadership</span>
-                                    <span class="skill-tag">Client Relations</span>
-                                </div>
-                                <div class="card-highlight">Led over 50 successful project deliveries</div>
-                            </div>
-                        </div>
-                        <div class="card-glow"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======== CREATIVE GALAXY (PROJECTS) ======== -->
-        <section id="projects" class="section">
-            <div class="section-inner">
-                <div class="section-header">
-                    <span class="section-tag">// EMPIRE GALAXY</span>
-                    <h2 class="section-title">Explore Our <span class="gradient-text">Product Empire</span></h2>
-                    <p class="section-desc">Each product is a batch of its own. Click to explore our direct project drives.</p>
-                    <div class="hero-cta-group" style="padding-top: 1rem; justify-content: center; gap: 10px;">
-                        <a href="https://drive.google.com/drive/folders/1o804Xwx3atOhppTH7tMC3iKjyx6DXi_v?usp=sharing" target="_blank" class="btn btn-primary" style="padding: 10px 24px; font-size: 0.7rem;">
-                            <span>Video Drive</span>
-                        </a>
-                        <a href="https://drive.google.com/drive/folders/1mNRVCTFiA_ZRmBZeGqnAumbs1kCeDU1u?usp=sharing" target="_blank" class="btn btn-ghost" style="padding: 10px 24px; font-size: 0.7rem;">
-                            <span>Graphics Drive</span>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="galaxy-grid">
-                    <div class="planet-card" data-project="nebula">
-                        <div class="planet-visual">
-                            <div class="planet-sphere" style="--planet-hue: 280; --planet-sat: 80%;"></div>
-                            <div class="planet-orbit"></div>
-                            <div class="planet-particles"></div>
-                        </div>
-                        <div class="planet-info">
-                            <span class="planet-category">Video + Branding</span>
-                            <h3 class="planet-name">Nebula Brand Campaign</h3>
-                            <p class="planet-desc">Complete rebrand and cinematic video campaign for a tech startup that redefined their market presence.</p>
-                            <div class="planet-meta">
-                                <span class="meta-tag">Video Production</span>
-                                <span class="meta-tag">Brand Design</span>
-                                <span class="meta-tag">Strategy</span>
-                            </div>
-                        </div>
-                        <div class="planet-glow"></div>
-                    </div>
-
-                    <div class="planet-card" data-project="quantum">
-                        <div class="planet-visual">
-                            <div class="planet-sphere" style="--planet-hue: 200; --planet-sat: 90%;"></div>
-                            <div class="planet-orbit"></div>
-                            <div class="planet-particles"></div>
-                        </div>
-                        <div class="planet-info">
-                            <span class="planet-category">Web Application</span>
-                            <h3 class="planet-name">Quantum Dashboard</h3>
-                            <p class="planet-desc">Real-time analytics platform with immersive data visualization and AI-powered insights for enterprise clients.</p>
-                            <div class="planet-meta">
-                                <span class="meta-tag">React</span>
-                                <span class="meta-tag">Node.js</span>
-                                <span class="meta-tag">Data Viz</span>
-                            </div>
-                        </div>
-                        <div class="planet-glow"></div>
-                    </div>
-
-                    <div class="planet-card" data-project="stellar">
-                        <div class="planet-visual">
-                            <div class="planet-sphere" style="--planet-hue: 330; --planet-sat: 75%;"></div>
-                            <div class="planet-orbit"></div>
-                            <div class="planet-particles"></div>
-                        </div>
-                        <div class="planet-info">
-                            <span class="planet-category">Cinematic Film</span>
-                            <h3 class="planet-name">Stellar Motion Reel</h3>
-                            <p class="planet-desc">A breathtaking cinematic brand film for a luxury fashion house, blending haute couture with digital artistry.</p>
-                            <div class="planet-meta">
-                                <span class="meta-tag">Cinematography</span>
-                                <span class="meta-tag">Motion Graphics</span>
-                                <span class="meta-tag">Color Grading</span>
-                            </div>
-                        </div>
-                        <div class="planet-glow"></div>
-                    </div>
-
-                    <div class="planet-card" data-project="cosmic">
-                        <div class="planet-visual">
-                            <div class="planet-sphere" style="--planet-hue: 50; --planet-sat: 85%;"></div>
-                            <div class="planet-orbit"></div>
-                            <div class="planet-particles"></div>
-                        </div>
-                        <div class="planet-info">
-                            <span class="planet-category">Brand Identity</span>
-                            <h3 class="planet-name">Cosmic Identity System</h3>
-                            <p class="planet-desc">Complete brand identity system for a fintech company, from logo to comprehensive brand guidelines.</p>
-                            <div class="planet-meta">
-                                <span class="meta-tag">Logo Design</span>
-                                <span class="meta-tag">Brand Guide</span>
-                                <span class="meta-tag">Print &amp; Digital</span>
-                            </div>
-                        </div>
-                        <div class="planet-glow"></div>
-                    </div>
-
-                    <div class="planet-card" data-project="aurora">
-                        <div class="planet-visual">
-                            <div class="planet-sphere" style="--planet-hue: 160; --planet-sat: 80%;"></div>
-                            <div class="planet-orbit"></div>
-                            <div class="planet-particles"></div>
-                        </div>
-                        <div class="planet-info">
-                            <span class="planet-category">E-Commerce Platform</span>
-                            <h3 class="planet-name">Aurora Platform</h3>
-                            <p class="planet-desc">Full-stack e-commerce platform with AR product previews and smooth checkout flow serving 100K+ users.</p>
-                            <div class="planet-meta">
-                                <span class="meta-tag">Next.js</span>
-                                <span class="meta-tag">AR Integration</span>
-                                <span class="meta-tag">E-Commerce</span>
-                            </div>
-                        </div>
-                        <div class="planet-glow"></div>
-                    </div>
-
-                    <div class="planet-card" data-project="photon">
-                        <div class="planet-visual">
-                            <div class="planet-sphere" style="--planet-hue: 260; --planet-sat: 90%;"></div>
-                            <div class="planet-orbit"></div>
-                            <div class="planet-particles"></div>
-                        </div>
-                        <div class="planet-info">
-                            <span class="planet-category">Interactive Experience</span>
-                            <h3 class="planet-name">Photon XR Experience</h3>
-                            <p class="planet-desc">An award-winning interactive WebGL experience for a gaming brand that captivated millions worldwide.</p>
-                            <div class="planet-meta">
-                                <span class="meta-tag">WebGL</span>
-                                <span class="meta-tag">Three.js</span>
-                                <span class="meta-tag">Interactive</span>
-                            </div>
-                        </div>
-                        <div class="planet-glow"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======== SKILL MATRIX ======== -->
-        <section id="skills" class="section">
-            <div class="section-inner">
-                <div class="section-header">
-                    <span class="section-tag">// SKILL MATRIX</span>
-                    <h2 class="section-title">Our <span class="gradient-text">Capability Nodes</span></h2>
-                    <p class="section-desc">An interconnected network of specialized creative and technical expertise.</p>
-                </div>
-
-                <div class="skills-matrix">
-                    <canvas id="skills-canvas"></canvas>
-                    <div class="skills-nodes">
-                        <div class="skill-node" data-skill="video" style="--node-x: 15%; --node-y: 30%;">
-                            <div class="node-core">
-                                <div class="node-icon">🎬</div>
-                                <div class="node-pulse"></div>
-                            </div>
-                            <h4>Video Editing</h4>
-                            <p>Premiere Pro • After Effects • DaVinci Resolve</p>
-                            <div class="node-level" data-level="95"></div>
-                        </div>
-
-                        <div class="skill-node" data-skill="design" style="--node-x: 50%; --node-y: 10%;">
-                            <div class="node-core">
-                                <div class="node-icon">🎨</div>
-                                <div class="node-pulse"></div>
-                            </div>
-                            <h4>Graphic Design</h4>
-                            <p>Photoshop • Illustrator • Figma</p>
-                            <div class="node-level" data-level="98"></div>
-                        </div>
-
-                        <div class="skill-node" data-skill="dev" style="--node-x: 85%; --node-y: 30%;">
-                            <div class="node-core">
-                                <div class="node-icon">💻</div>
-                                <div class="node-pulse"></div>
-                            </div>
-                            <h4>Full Stack Dev</h4>
-                            <p>React • Node.js • Three.js • Python</p>
-                            <div class="node-level" data-level="96"></div>
-                        </div>
-
-                        <div class="skill-node" data-skill="uiux" style="--node-x: 25%; --node-y: 70%;">
-                            <div class="node-core">
-                                <div class="node-icon">✨</div>
-                                <div class="node-pulse"></div>
-                            </div>
-                            <h4>UI/UX Design</h4>
-                            <p>Prototyping • User Research • Interaction Design</p>
-                            <div class="node-level" data-level="95"></div>
-                        </div>
-
-                        <div class="skill-node" data-skill="brand" style="--node-x: 50%; --node-y: 55%;">
-                            <div class="node-core">
-                                <div class="node-icon">💎</div>
-                                <div class="node-pulse"></div>
-                            </div>
-                            <h4>Branding</h4>
-                            <p>Strategy • Identity Systems • Guidelines</p>
-                            <div class="node-level" data-level="96"></div>
-                        </div>
-
-                        <div class="skill-node" data-skill="motion" style="--node-x: 75%; --node-y: 70%;">
-                            <div class="node-core">
-                                <div class="node-icon">🚀</div>
-                                <div class="node-pulse"></div>
-                            </div>
-                            <h4>Motion Graphics</h4>
-                            <p>After Effects • Cinema 4D • Blender</p>
-                            <div class="node-level" data-level="97"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======== CLIENT IMPACT ======== -->
-        <section id="testimonials" class="section">
-            <div class="section-inner">
-                <div class="section-header">
-                    <span class="section-tag">// CLIENT IMPACT</span>
-                    <h2 class="section-title">Voices from the <span class="gradient-text">Universe</span></h2>
-                    <p class="section-desc">What our clients say about their experience.</p>
-                </div>
-
-                <div class="testimonials-grid">
-                    <div class="testimonial-card">
-                        <div class="testimonial-glow"></div>
-                        <div class="testimonial-quote">"</div>
-                        <p class="testimonial-text">The motion graphics and 3D animations they delivered completely revitalized our product launch. Exceptional eye for detail and timely execution.</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar" style="--hue: 260;"><span>RK</span></div>
-                            <div>
-                                <strong>Rajesh Kumar</strong>
-                                <span>CEO, TechNova Inc.</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-stars">★★★★★</div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-glow"></div>
-                        <div class="testimonial-quote">"</div>
-                        <p class="testimonial-text">Our brand identity is finally cohesive and modern. They created a comprehensive guideline that our entire organization relies on daily. Highly recommended.</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar" style="--hue: 190;"><span>SL</span></div>
-                            <div>
-                                <strong>Sofia Laurent</strong>
-                                <span>CMO, LuxeVibe Fashion</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-stars"><span style="color: #FFD700">★★★★</span><span style="color: #777">★</span></div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-glow"></div>
-                        <div class="testimonial-quote">"</div>
-                        <p class="testimonial-text">We asked for a WebGL experience and they delivered a masterpiece. The performance and visual quality of our interactive platform exceeded all expectations.</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar" style="--hue: 140;"><span>MZ</span></div>
-                            <div>
-                                <strong>Marcus Zhang</strong>
-                                <span>Founder, QuantumLabs</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-stars">★★★★★</div>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="testimonial-glow"></div>
-                        <div class="testimonial-quote">"</div>
-                        <p class="testimonial-text">From robust React architecture to seamless cinematic video editing, this team handles full-stack creative needs better than any agency we've hired.</p>
-                        <div class="testimonial-author">
-                            <div class="author-avatar" style="--hue: 340;"><span>OB</span></div>
-                            <div>
-                                <strong>Olivia Brooks</strong>
-                                <span>Director, StellarMedia Group</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-stars">★★★★★</div>
-                    </div>
-                </div>
-
-                <!-- Rate Us Widget -->
-                <div class="rate-us-container">
-                    <h3 class="rate-prompt">Leave a Review</h3>
-                    <div class="stars-widget" id="rate-stars">
-                        <span class="star-btn" data-val="1">★</span>
-                        <span class="star-btn" data-val="2">★</span>
-                        <span class="star-btn" data-val="3">★</span>
-                        <span class="star-btn" data-val="4">★</span>
-                        <span class="star-btn" data-val="5">★</span>
-                    </div>
-                    <div class="review-input-area">
-                        <textarea id="review-text" placeholder="Write your experience with us..." rows="4"></textarea>
-                        <button id="submit-review-btn" class="btn btn-primary btn-submit-review">Publish Review</button>
-                    </div>
-                    <p class="rate-thanks" id="rate-thanks" style="display: none;"></p>
-                </div>
-
-                <!-- User Submitted Reviews Container -->
-                <div id="user-reviews-container" class="testimonials-grid user-reviews-grid" style="margin-top: 40px; border-top: 1px solid rgba(139, 92, 246, 0.2); padding-top: 40px;">
-                    <!-- Dynamically injected reviews will go here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ======== CONTACT PORTAL ======== -->
-        <section id="contact" class="section">
-            <div class="section-inner">
-                <div class="contact-wrapper">
-                    <div class="portal-visual">
-                        <div class="portal-ring portal-ring-1"></div>
-                        <div class="portal-ring portal-ring-2"></div>
-                        <div class="portal-ring portal-ring-3"></div>
-                        <div class="portal-core"></div>
-                        <div class="portal-glow"></div>
-                    </div>
-
-                    <div class="contact-content">
-                        <div class="section-header">
-                            <span class="section-tag">// CONTACT US</span>
-                            <h2 class="section-title">Cook Your Next <span class="gradient-text">Batch With Us</span></h2>
-                            <p class="section-desc">Ready to break bad? Send a message and let's cook something extraordinary.</p>
-                        </div>
-
-                        <form id="contact-form" class="contact-form" action="https://formsubmit.co/info@heisenworks.studio" method="POST">
-                            <!-- FormSubmit Configuration -->
-                            <input type="hidden" name="_subject" value="🚀 New Project Inquiry — HeisenWorks">
-                            <input type="hidden" name="_captcha" value="false">
-                            <input type="hidden" name="_template" value="box">
-                            <input type="hidden" name="_next" value="https://heisenworks.studio">
-                            <input type="text" name="_honey" style="display:none">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="name">Your Name</label>
-                                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
-                                    <div class="input-glow"></div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
-                                    <div class="input-glow"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="project-type">Project Type</label>
-                                <select id="project-type" name="Project Type" required>
-                                    <option value="" disabled selected>Select project type</option>
-                                    <option value="Cinematic Editing (Adobe Suite)">Cinematic Editing (Adobe Suite)</option>
-                                    <option value="Brand Identity & Design (PS/AI/Figma)">Brand Identity & Design (PS/AI/Figma)</option>
-                                    <option value="Web Applications (React/Three.js)">Web Applications (React/Three.js)</option>
-                                    <option value="3D Motion Design (C4D/Blender)">3D Motion Design (C4D/Blender)</option>
-                                    <option value="Creative Strategy & Full Package">Creative Strategy & Full Package</option>
-                                </select>
-                                <div class="input-glow"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Your Message</label>
-                                <textarea id="message" name="Message" rows="5" placeholder="Tell us about your project vision..." required></textarea>
-                                <div class="input-glow"></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-submit">
-                                <span>Transmit Message</span>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2L15 22 11 13 2 9l20-7z"/></svg>
-                            </button>
-                        </form>
-
-                        <div class="contact-links">
-                            <a href="https://www.instagram.com/heisen.works_/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-                            </a>
-                            <a href="https://x.com/HeisenWorks" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter/X">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                            </a>
-                            <a href="https://in.linkedin.com/company/heisenworks" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- ============ FOOTER ============ -->
-    <footer id="footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <span class="logo-icon">BrBa</span>
-                <span>HeisenWorks Studio</span>
-            </div>
-            <p class="footer-copy">&copy; 2025 HeisenWorks Studio. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- ============ PROJECT MODAL ============ -->
-    <div id="project-modal" class="modal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close">&times;</button>
-            <div class="modal-header">
-                <span class="modal-category"></span>
-                <h2 class="modal-title"></h2>
-            </div>
-            <div class="modal-body">
-                <p class="modal-desc"></p>
-                <div class="modal-showcase">
-                    <div class="showcase-item">
-                        <h4>Project Highlights</h4>
-                        <ul class="modal-highlights"></ul>
-                    </div>
-                    <div class="showcase-item">
-                        <h4>Technologies Used</h4>
-                        <div class="modal-tech"></div>
-                    </div>
-                    <div class="showcase-item">
-                        <h4>Results</h4>
-                        <div class="modal-results"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="hero-scan-lines">
+      <div class="scan-beam"></div><div class="scan-beam"></div><div class="scan-beam"></div>
+      <div class="scan-beam"></div><div class="scan-beam"></div>
+      <div class="scan-col"></div><div class="scan-col"></div><div class="scan-col"></div>
     </div>
+    <div id="page-reveal"></div>
+    <div id="hero-text">
+      <div class="hero-eyebrow">Software Studio · Est. 2025</div>
+      <h1 class="hero-h1">
+        <span class="line"><span>The</span></span>
+        <span class="line"><span><em>HeisenWorks</em></span></span>
+        <span class="line"><span>Studio</span></span>
+      </h1>
+      <p class="hero-sub">A global creative team pushing the boundaries of design, storytelling, and technology.</p>
+      <div class="hero-scroll-hint"><span>Scroll to explore</span><div class="scroll-bar"></div></div>
+    </div>
+  </div>
+</div>
 
-    <!-- ============ SCRIPTS ============ -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="main.js"></script>
+<!-- INTRO -->
+<section id="intro">
+  <div class="intro-inner">
+    <div style="position:relative;">
+      <div class="intro-left-num" aria-hidden="true">01</div>
+      <div class="intro-tag rev">About</div>
+      <h2 class="intro-headline rev rev-d1">We <em>observe.</em><br>We adapt.<br>We ship.</h2>
+    </div>
+    <div class="intro-body">
+      <p class="rev rev-d2">heisenworks.studio is a small, senior software studio based in India. We take on 3–4 projects per year — no more. Each one gets our full attention, from architecture to final pixel.</p>
+      <p class="rev rev-d3">We believe the act of building software changes the problem. Like Heisenberg's principle — observation is never passive. We embed early, ask sharp questions, and build systems that last.</p>
+      <div class="terminal-block rev rev-d4" id="terminal">
+        <div class="terminal-line" data-delay="0">$ hw init --mode=precision</div>
+        <div class="terminal-line" data-delay="400">→ Scanning requirements...</div>
+        <div class="terminal-line" data-delay="800">→ Architecture: <span style="color:var(--green)">optimal</span></div>
+        <div class="terminal-line" data-delay="1200">→ Quality threshold: <span style="color:var(--green)">99.1%</span></div>
+        <div class="terminal-line" data-delay="1600">✓ Ready to ship.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRAWL 1 -->
+<div class="crawl-text-section" style="margin-top:80px;">
+  <div class="crawl-track forward">
+    <span>Software Studio</span><span class="blue">·</span><span class="filled">heisenworks</span><span class="blue">·</span>
+    <span>Full Stack</span><span class="blue">·</span><span class="filled">India</span><span class="blue">·</span>
+    <span>Software Studio</span><span class="blue">·</span><span class="filled">heisenworks</span><span class="blue">·</span>
+    <span>Full Stack</span><span class="blue">·</span><span class="filled">India</span><span class="blue">·</span>
+  </div>
+</div>
+
+
+<!-- TEAM -->
+<section id="team">
+  <div class="team-header rev">Meet the Cooks</div>
+  <h2 class="team-title rev rev-d1">Each specialist brings a unique<br><em>99.1% pure</em> creative force.</h2>
+  <div class="team-grid">
+    <div class="team-card rev" onclick="window.location='team-fahad.html'"><div class="team-avatar">F</div><div class="team-name glitch-text">Fahad</div><div class="team-role">Founder &amp; Developer</div><div class="team-link">View Profile →</div></div>
+    <div class="team-card rev rev-d1" onclick="window.location='team-siddhartha.html'"><div class="team-avatar">S</div><div class="team-name glitch-text">Siddhartha</div><div class="team-role">CEO &amp; AI Lead</div><div class="team-link">View Profile →</div></div>
+    <div class="team-card rev rev-d2" onclick="window.location='team-siddharth-sahu.html'"><div class="team-avatar">SS</div><div class="team-name glitch-text">Siddharth Sahu</div><div class="team-role">Video Editor</div><div class="team-link">View Profile →</div></div>
+    <div class="team-card rev rev-d3" onclick="window.location='team-tanisha.html'"><div class="team-avatar">T</div><div class="team-name glitch-text">Tanisha</div><div class="team-role">Frontend Developer</div><div class="team-link">View Profile →</div></div>
+    <div class="team-card rev rev-d4" onclick="window.location='team-aniket.html'"><div class="team-avatar">A</div><div class="team-name glitch-text">Aniket Yadav</div><div class="team-role">Graphics Designer</div><div class="team-link">View Profile →</div></div>
+    <div class="team-card rev" onclick="window.location='team-tanushi.html'"><div class="team-avatar">T</div><div class="team-name glitch-text">Tanushi</div><div class="team-role">Lead Project Manager</div><div class="team-link">View Profile →</div></div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-label rev">Product Empire</div>
+  <h2 class="work-title rev rev-d1">Explore our<br><em>project galaxy.</em></h2>
+  <div class="work-cards-scene" id="workScene">
+    <div class="wcard rev">
+      <div class="wcard-num"><span>01</span><span>2025</span></div>
+      <div class="wcard-title glitch-text">Nebula Brand Campaign</div>
+      <div class="wcard-desc">Complete rebrand and cinematic video campaign for a tech startup that redefined their market presence. Delivered 12 branded assets, 3 hero videos, and a motion identity system.</div>
+      <div class="wcard-tags"><span class="wtag">Branding</span><span class="wtag">Video</span><span class="wtag">After Effects</span><span class="wtag">Cinema 4D</span></div>
+      <div class="wcard-case"><strong>Results:</strong> 340% increase in brand engagement, 2.1M video views in first month, featured on Awwwards.</div>
+      <a href="#" class="wcard-link">View case study →</a>
+    </div>
+    <div class="wcard rev rev-d1">
+      <div class="wcard-num"><span>02</span><span>2025</span></div>
+      <div class="wcard-title glitch-text">Quantum Dashboard</div>
+      <div class="wcard-desc">Real-time analytics platform with immersive data visualization and AI-powered insights for enterprise clients. Processing 50M+ data points daily.</div>
+      <div class="wcard-tags"><span class="wtag">React</span><span class="wtag">Node.js</span><span class="wtag">Three.js</span><span class="wtag">Python</span></div>
+      <div class="wcard-case"><strong>Results:</strong> 89% faster decision-making, adopted by 3 Fortune 500 companies, 99.97% uptime.</div>
+      <a href="#" class="wcard-link">View case study →</a>
+    </div>
+    <div class="wcard rev rev-d2">
+      <div class="wcard-num"><span>03</span><span>2024</span></div>
+      <div class="wcard-title glitch-text">Stellar Motion Reel</div>
+      <div class="wcard-desc">A breathtaking cinematic brand film for a luxury fashion house, blending haute couture with digital artistry. 4K HDR production across 3 countries.</div>
+      <div class="wcard-tags"><span class="wtag">Premiere Pro</span><span class="wtag">After Effects</span><span class="wtag">DaVinci</span></div>
+      <div class="wcard-case"><strong>Results:</strong> 5.8M organic views, Vimeo Staff Pick, 47% increase in brand recall.</div>
+      <a href="#" class="wcard-link">View case study →</a>
+    </div>
+    <div class="wcard rev rev-d3">
+      <div class="wcard-num"><span>04</span><span>2024</span></div>
+      <div class="wcard-title glitch-text">Cosmic Identity System</div>
+      <div class="wcard-desc">Complete brand identity system for a fintech company, from logo to comprehensive brand guidelines. 200+ page brand bible delivered.</div>
+      <div class="wcard-tags"><span class="wtag">Figma</span><span class="wtag">Illustrator</span><span class="wtag">Brand Strategy</span></div>
+      <div class="wcard-case"><strong>Results:</strong> Unified brand across 14 products, 62% improvement in brand consistency scores.</div>
+      <a href="#" class="wcard-link">View case study →</a>
+    </div>
+    <div class="wcard rev">
+      <div class="wcard-num"><span>05</span><span>2024</span></div>
+      <div class="wcard-title glitch-text">Aurora Platform</div>
+      <div class="wcard-desc">Full-stack e-commerce platform with AR product previews and smooth checkout flow serving 100K+ users. Sub-2s load times globally.</div>
+      <div class="wcard-tags"><span class="wtag">Next.js</span><span class="wtag">PostgreSQL</span><span class="wtag">WebGL</span><span class="wtag">Stripe</span></div>
+      <div class="wcard-case"><strong>Results:</strong> $2.4M GMV in first quarter, 34% conversion rate increase, 100K+ active users.</div>
+      <a href="#" class="wcard-link">View case study →</a>
+    </div>
+    <div class="wcard rev rev-d1">
+      <div class="wcard-num"><span>06</span><span>2023</span></div>
+      <div class="wcard-title glitch-text">Photon XR Experience</div>
+      <div class="wcard-desc">An award-winning interactive WebGL experience for a gaming brand that captivated millions worldwide. Real-time ray tracing in browser.</div>
+      <div class="wcard-tags"><span class="wtag">Three.js</span><span class="wtag">WebGL</span><span class="wtag">GLSL</span><span class="wtag">Blender</span></div>
+      <div class="wcard-case"><strong>Results:</strong> 12M+ interactions, FWA Site of the Day, 4.2 min avg session duration.</div>
+      <a href="#" class="wcard-link">View case study →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CRAWL 2 -->
+<div class="crawl-text-section">
+  <div class="crawl-track reverse">
+    <span>We Build</span><span class="blue">·</span><span class="filled">Things That Work</span><span class="blue">·</span>
+    <span>0 Deadlines Missed</span><span class="blue">·</span><span class="filled">Since 2025</span><span class="blue">·</span>
+    <span>We Build</span><span class="blue">·</span><span class="filled">Things That Work</span><span class="blue">·</span>
+    <span>0 Deadlines Missed</span><span class="blue">·</span><span class="filled">Since 2025</span><span class="blue">·</span>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="skills-header rev">Capability Nodes</div>
+  <h2 class="skills-title rev rev-d1">An interconnected network of<br><em>specialized expertise.</em></h2>
+  <div class="skills-grid">
+    <div class="skill-node rev"><div class="skill-name">Video Editing</div><div class="skill-tools">Premiere Pro • After Effects • DaVinci Resolve</div></div>
+    <div class="skill-node rev rev-d1"><div class="skill-name">Graphic Design</div><div class="skill-tools">Photoshop • Illustrator • Figma</div></div>
+    <div class="skill-node rev rev-d2"><div class="skill-name">Full Stack Dev</div><div class="skill-tools">React • Node.js • Three.js • Python</div></div>
+    <div class="skill-node rev rev-d3"><div class="skill-name">UI/UX Design</div><div class="skill-tools">Prototyping • User Research • Interaction Design</div></div>
+    <div class="skill-node rev"><div class="skill-name">Branding</div><div class="skill-tools">Strategy • Identity Systems • Guidelines</div></div>
+    <div class="skill-node rev rev-d1"><div class="skill-name">Motion Graphics</div><div class="skill-tools">After Effects • Cinema 4D • Blender</div></div>
+  </div>
+</section>
+
+
+<!-- 3D LOGO -->
+<section id="logo3d-section">
+  <div class="logo3d-wrap"><div class="logo3d">
+    <div class="logo-face f-front">hw.</div><div class="logo-face f-back">hw.</div>
+    <div class="logo-face f-right">≥</div><div class="logo-face f-left">≤</div>
+    <div class="logo-face f-top">—</div><div class="logo-face f-bot">—</div>
+  </div></div>
+  <p class="logo3d-tagline rev gradient-text">We build things that work.</p>
+  <p class="logo3d-sub rev rev-d1">A senior software studio. Small on purpose. Precise by design.</p>
+</section>
+
+<!-- STUDIO -->
+<section id="studio">
+  <div class="studio-wrap">
+    <div>
+      <div class="studio-left-label rev">The Studio</div>
+      <h2 class="studio-quote rev rev-d1">Observation is<br>never <em>passive.</em></h2>
+      <div class="studio-body">
+        <p class="rev rev-d2">We are a small studio of senior engineers. We don't scale headcount — we scale quality. Every line of code we ship is owned, tested, and built to last.</p>
+        <p class="rev rev-d3">3–4 projects per year. No exceptions. That constraint is the product.</p>
+      </div>
+      <div class="studio-stats rev rev-d4">
+        <div class="stat"><span class="stat-n counter" data-target="50">0</span><span class="stat-l">Projects Shipped</span></div>
+        <div class="stat"><span class="stat-n counter" data-target="6">0</span><span class="stat-l">Team Members</span></div>
+        <div class="stat"><span class="stat-n counter" data-target="0">0</span><span class="stat-l">Missed Deadlines</span></div>
+      </div>
+    </div>
+    <div class="studio-right-visual rev rev-d2">
+      <div class="studio-orb"></div><div class="studio-orb"></div><div class="studio-orb"></div>
+      <div class="studio-center-dot"></div>
+      <div class="studio-info-pill">Est. 2025</div>
+      <div class="studio-info-pill">India · Remote</div>
+      <div class="studio-info-pill">Full-Stack</div>
+      <div class="studio-info-pill">Available Now</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-header rev">How we work</div>
+  <div class="process-row rev"><div class="process-giant-num">01</div><div class="process-content"><h3 class="process-title">Embed Early</h3><p class="process-desc">We don't wait for a brief. We join the conversation before requirements are locked — when change is still cheap and exploration is still possible.</p></div></div>
+  <div class="process-row rev rev-d1"><div class="process-giant-num">02</div><div class="process-content"><h3 class="process-title">Architect First</h3><p class="process-desc">No code before the structure is sound. We design systems that survive requirements changes, team changes, and the test of time.</p></div></div>
+  <div class="process-row rev rev-d2"><div class="process-giant-num">03</div><div class="process-content"><h3 class="process-title">Build Sharp</h3><p class="process-desc">Senior engineers only. Clean code, typed APIs, comprehensive tests. No shortcuts, no junior handoffs, no corners cut.</p></div></div>
+  <div class="process-row rev rev-d3"><div class="process-giant-num">04</div><div class="process-content"><h3 class="process-title">Ship &amp; Stand Behind</h3><p class="process-desc">We don't disappear at launch. We own the outcome and stay close through stabilisation, scaling, and whatever comes next.</p></div></div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="test-header rev">Voices from the Universe</div>
+  <h2 class="test-title rev rev-d1">What our clients say about<br><em>their experience.</em></h2>
+  <div class="test-track">
+    <div class="test-card"><p>"The motion graphics and 3D animations they delivered completely revitalized our product launch. Exceptional eye for detail and timely execution."</p><div class="test-author">— Tech Startup CEO</div></div>
+    <div class="test-card"><p>"Our brand identity is finally cohesive and modern. They created a comprehensive guideline that our entire organization relies on daily."</p><div class="test-author">— Enterprise Client</div></div>
+    <div class="test-card"><p>"We asked for a WebGL experience and they delivered a masterpiece. The performance and visual quality exceeded all expectations."</p><div class="test-author">— Gaming Brand Director</div></div>
+    <div class="test-card"><p>"From robust React architecture to seamless cinematic video editing, this team handles full-stack creative needs better than any agency we've hired."</p><div class="test-author">— Agency Partner</div></div>
+    <div class="test-card"><p>"The motion graphics and 3D animations they delivered completely revitalized our product launch. Exceptional eye for detail and timely execution."</p><div class="test-author">— Tech Startup CEO</div></div>
+    <div class="test-card"><p>"Our brand identity is finally cohesive and modern. They created a comprehensive guideline that our entire organization relies on daily."</p><div class="test-author">— Enterprise Client</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-bg-text" aria-hidden="true">Let's build</div>
+  <div class="contact-inner">
+    <h2 class="contact-h rev">Let's build<br><em>something</em><br>together.</h2>
+    <p class="contact-sub rev rev-d1">We're selective. If your project is interesting, we'll make time.</p>
+    <div id="mag-wrap" class="rev rev-d2">
+      <a href="mailto:info@heisenworks.studio" id="mag-btn"><span>Start a conversation</span><span>→</span></a>
+    </div>
+    <a href="mailto:info@heisenworks.studio" class="contact-email rev rev-d3">info@heisenworks.studio</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 heisenworks.studio</span>
+  <span class="status-dot">Available for projects</span>
+  <span>Built with intention</span>
+</footer>
+
+<script>
+/* PROGRESS BAR */
+const progressBar=document.getElementById('progress-bar');
+window.addEventListener('scroll',()=>{const h=document.documentElement;const p=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;progressBar.style.width=p+'%';},{passive:true});
+
+/* CURSOR + PARTICLE TRAIL */
+const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0,trails=[];
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;
+  const t=document.createElement('div');t.className='cursor-trail';t.style.left=mx+'px';t.style.top=my+'px';
+  t.style.transform='translate(-50%,-50%)';document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transform='translate(-50%,-50%) scale(0)';},10);
+  setTimeout(()=>t.remove(),600);
+});
+(function trackCursor(){dot.style.left=mx+'px';dot.style.top=my+'px';rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(trackCursor)})();
+document.querySelectorAll('a,button,.wcard,.team-card,.skill-node').forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('hovered'));el.addEventListener('mouseleave',()=>ring.classList.remove('hovered'));});
+
+/* KATANA SLASH */
+const kCanvas=document.getElementById('katana-canvas'),kCtx=kCanvas.getContext('2d');
+function resizeKatana(){kCanvas.width=kCanvas.offsetWidth;kCanvas.height=kCanvas.offsetHeight}
+resizeKatana();window.addEventListener('resize',resizeKatana);
+let slashParticles=[],slashTrails=[],slashFlash=0;
+
+function Slash(x1,y1,x2,y2){
+  this.x1=x1;this.y1=y1;this.x2=x2;this.y2=y2;this.life=1.0;this.width=4;this.glow=1.0;
+  const steps=50;
+  for(let i=0;i<steps;i++){const t=i/steps;
+    slashParticles.push({x:x1+(x2-x1)*t+(Math.random()-.5)*12,y:y1+(y2-y1)*t+(Math.random()-.5)*12,
+    vx:(Math.random()-.5)*3,vy:-Math.random()*3-1,life:1+Math.random()*.5,size:Math.random()*4+1,
+    hue:Math.random()<.7?215:150});}
+  slashFlash=0.7;
+  document.body.classList.add('shake');setTimeout(()=>document.body.classList.remove('shake'),150);
+}
+
+function drawKatana(){
+  kCtx.clearRect(0,0,kCanvas.width,kCanvas.height);
+  if(slashFlash>0){kCtx.save();kCtx.fillStyle=`rgba(0,71,255,${slashFlash*0.2})`;kCtx.fillRect(0,0,kCanvas.width,kCanvas.height);kCtx.restore();slashFlash=Math.max(0,slashFlash-0.03);}
+  slashTrails.forEach(sl=>{if(sl.life<=0)return;
+    const grad=kCtx.createLinearGradient(sl.x1,sl.y1,sl.x2,sl.y2);
+    grad.addColorStop(0,`rgba(0,100,255,0)`);grad.addColorStop(0.15,`rgba(100,180,255,${sl.life})`);
+    grad.addColorStop(0.5,`rgba(220,240,255,${sl.life})`);grad.addColorStop(0.85,`rgba(100,180,255,${sl.life})`);
+    grad.addColorStop(1,`rgba(0,100,255,0)`);
+    kCtx.save();kCtx.beginPath();kCtx.moveTo(sl.x1,sl.y1);kCtx.lineTo(sl.x2,sl.y2);
+    kCtx.strokeStyle=grad;kCtx.lineWidth=sl.width*sl.life;kCtx.lineCap='round';
+    kCtx.shadowColor='#4488FF';kCtx.shadowBlur=30*sl.life;kCtx.stroke();kCtx.restore();
+    kCtx.save();kCtx.beginPath();kCtx.moveTo(sl.x1,sl.y1);kCtx.lineTo(sl.x2,sl.y2);
+    kCtx.strokeStyle=`rgba(0,71,255,${sl.life*0.2})`;kCtx.lineWidth=sl.width*sl.life*16;kCtx.lineCap='round';kCtx.stroke();kCtx.restore();
+    sl.life-=0.015;});
+  slashTrails=slashTrails.filter(s=>s.life>0);
+  slashParticles.forEach(p=>{if(p.life<=0)return;kCtx.save();
+    const c=p.hue===215?`rgba(100,180,255,${p.life})`:`rgba(30,185,84,${p.life*.8})`;
+    kCtx.beginPath();kCtx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);kCtx.fillStyle=c;kCtx.shadowColor=c;kCtx.shadowBlur=12;kCtx.fill();kCtx.restore();
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.04;p.life-=0.02;});
+  slashParticles=slashParticles.filter(p=>p.life>0);
+  requestAnimationFrame(drawKatana);
+}
+drawKatana();
+
+function autoSlash(){
+  const w=kCanvas.width,h=kCanvas.height;
+  const types=[
+    ()=>({x1:w*(0.05+Math.random()*.3),y1:h*(0.1+Math.random()*.3),x2:w*(0.05+Math.random()*.3)+w*(0.4+Math.random()*.3),y2:h*(0.1+Math.random()*.3)+h*(0.3+Math.random()*.3)}),
+    ()=>({x1:w*(0.5+Math.random()*.4),y1:h*(0.05+Math.random()*.3),x2:w*(0.5+Math.random()*.4)-w*(0.35+Math.random()*.25),y2:h*(0.05+Math.random()*.3)+h*(0.3+Math.random()*.35)}),
+    ()=>{const sy=h*(.25+Math.random()*.5);return{x1:w*.02,y1:sy-h*.05,x2:w*.9,y2:sy+h*.03};}
+  ];
+  const t=types[Math.floor(Math.random()*3)]();slashTrails.push(new Slash(t.x1,t.y1,t.x2,t.y2));
+  if(Math.random()<.4)setTimeout(()=>{const t2=types[Math.floor(Math.random()*3)]();slashTrails.push(new Slash(t2.x1,t2.y1,t2.x2,t2.y2));},120);
+  setTimeout(autoSlash,2000+Math.random()*2500);
+}
+setTimeout(autoSlash,500);
+document.getElementById('hero-sticky').addEventListener('click',e=>{const r=kCanvas.getBoundingClientRect();const cx=e.clientX-r.left,cy=e.clientY-r.top;const a=-Math.PI/4+(Math.random()-.5)*.6,len=kCanvas.width*.5;slashTrails.push(new Slash(cx-Math.cos(a)*len*.4,cy-Math.sin(a)*len*.4,cx+Math.cos(a)*len*.6,cy+Math.sin(a)*len*.6));});
+
+/* HERO SCROLL */
+const heroPin=document.getElementById('hero-pin'),heroFrame=document.getElementById('hero-frame'),heroText=document.getElementById('hero-text'),pageReveal=document.getElementById('page-reveal'),heroArt=document.getElementById('hero-art'),heroScanLines=document.querySelector('.hero-scan-lines');
+function updateHero(){const pinTop=heroPin.getBoundingClientRect().top,totalScroll=heroPin.offsetHeight-window.innerHeight,scrolled=-pinTop;if(scrolled<0||scrolled>totalScroll)return;const p=scrolled/totalScroll;
+const fp=Math.min(p/.55,1),scale=1-fp*.13,radius=fp*14,margin=fp*44;heroFrame.style.transform=`scale(${scale})`;heroFrame.style.borderRadius=radius+'px';heroFrame.style.margin=margin+'px';
+const rp=Math.max(0,Math.min((p-.15)/.75,1));pageReveal.style.height=(rp*100)+'%';
+const tf=Math.max(0,1-p*4);heroText.style.opacity=tf;heroText.style.transform=`translateY(${p*-90}px)`;
+if(heroScanLines)heroScanLines.style.opacity=Math.max(0,1-p*3);heroArt.style.transform=`translateX(${-p*4}%)`;}
+window.addEventListener('scroll',updateHero,{passive:true});updateHero();
+
+/* SCAN SPARKS */
+(function(){const lines=document.querySelector('.hero-scan-lines');if(!lines)return;function spark(){const s=document.createElement('div');s.className='scan-spark';s.style.left=(10+Math.random()*80)+'%';s.style.top=(5+Math.random()*90)+'%';s.style.zIndex=22;lines.appendChild(s);setTimeout(()=>s.remove(),900+Math.random()*400);}setInterval(spark,600);setInterval(spark,1100);})();
+
+/* CODE PARTICLES */
+(function(){const snippets=['const x = observe()','fn ship() -> Ok(())','// heisenberg','async fn build()','type Quality = Max','impl Senior','SELECT precision','await ship()','.map(adapt)','struct Studio'];const canvas=document.querySelector('.art-canvas');if(!canvas)return;for(let i=0;i<12;i++){setTimeout(()=>{const p=document.createElement('div');p.className='code-particle';p.textContent=snippets[Math.floor(Math.random()*snippets.length)];p.style.left=(5+Math.random()*85)+'%';p.style.top=(10+Math.random()*80)+'%';p.style.animationDuration=(8+Math.random()*12)+'s';p.style.animationDelay=(Math.random()*6)+'s';canvas.appendChild(p);},i*300);}})();
+</script>
+
+<script>
+/* INTERSECTION OBSERVER */
+const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}});},{threshold:0.1,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rev').forEach(el=>revObs.observe(el));
+
+/* NUMBER COUNTER */
+const counterObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const el=e.target;const target=parseInt(el.dataset.target);if(target===0){el.textContent='0';return;}let current=0;const step=Math.max(1,Math.floor(target/40));const timer=setInterval(()=>{current+=step;if(current>=target){current=target;clearInterval(timer);}el.textContent=current;},40);counterObs.unobserve(el);}});},{threshold:0.5});
+document.querySelectorAll('.counter').forEach(el=>counterObs.observe(el));
+
+/* TERMINAL TYPING */
+const termObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const lines=e.target.querySelectorAll('.terminal-line');lines.forEach(line=>{const delay=parseInt(line.dataset.delay)||0;setTimeout(()=>line.classList.add('visible'),delay);});termObs.unobserve(e.target);}});},{threshold:0.5});
+const term=document.getElementById('terminal');if(term)termObs.observe(term);
+
+/* TEXT SCRAMBLE */
+class TextScramble{constructor(el){this.el=el;this.chars='!<>-_\\/[]{}—=+*^?#________';this.update=this.update.bind(this)}
+setText(newText){const oldText=this.el.innerText;const length=Math.max(oldText.length,newText.length);const promise=new Promise(resolve=>this.resolve=resolve);this.queue=[];
+for(let i=0;i<length;i++){const from=oldText[i]||'';const to=newText[i]||'';const start=Math.floor(Math.random()*40);const end=start+Math.floor(Math.random()*40);this.queue.push({from,to,start,end});}
+cancelAnimationFrame(this.frameRequest);this.frame=0;this.update();return promise}
+update(){let output='';let complete=0;for(let i=0,n=this.queue.length;i<n;i++){let{from,to,start,end,char}=this.queue[i];
+if(this.frame>=end){complete++;output+=to;}else if(this.frame>=start){if(!char||Math.random()<.28){char=this.chars[Math.floor(Math.random()*this.chars.length)];this.queue[i].char=char;}output+=`<span style="color:var(--cobalt)">${char}</span>`;}else{output+=from;}}
+this.el.innerHTML=output;if(complete===this.queue.length){this.resolve();}else{this.frameRequest=requestAnimationFrame(this.update);this.frame++;}}}
+
+// Apply scramble to elements on hover
+document.querySelectorAll('.glitch-text').forEach(el=>{const fx=new TextScramble(el);const original=el.textContent;
+el.addEventListener('mouseenter',()=>{fx.setText(original);});});
+
+/* MAGNETIC BUTTON */
+const magWrap=document.getElementById('mag-wrap'),magBtn=document.getElementById('mag-btn');
+if(magWrap){magWrap.addEventListener('mousemove',e=>{const r=magWrap.getBoundingClientRect();const dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);magBtn.style.transition='transform .1s ease';magBtn.style.transform=`translate(${dx*.35}px,${dy*.35}px)`;});
+magWrap.addEventListener('mouseleave',()=>{magBtn.style.transition='transform .7s cubic-bezier(.16,1,.3,1)';magBtn.style.transform='translate(0,0)';});}
+
+/* ORB PARALLAX */
+const orbs=document.querySelectorAll('.studio-orb');
+window.addEventListener('scroll',()=>{const el=document.getElementById('studio');if(!el)return;const r=el.getBoundingClientRect();const p=-r.top/r.height;if(p<-.1||p>1.2)return;orbs.forEach((orb,i)=>{orb.style.transform=`translate(-50%,-50%) translateY(${p*(i+1)*22}px) rotate(${p*30*(i+1)}deg)`;});},{passive:true});
+
+/* NODE PULSE */
+(function animateNodes(){const nodes=document.querySelectorAll('#nodeNet circle');nodes.forEach((n,i)=>{const base=parseFloat(n.getAttribute('opacity'))||.4;const t=Date.now()/1000;n.setAttribute('opacity',(base+Math.sin(t*1.5+i*.7)*.2).toFixed(2));});requestAnimationFrame(animateNodes);})();
+
+/* TILT on work cards + team cards */
+document.querySelectorAll('.wcard,.team-card').forEach(card=>{card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const cx=(e.clientX-r.left)/r.width-.5,cy=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(800px) rotateX(${-cy*10}deg) rotateY(${cx*10}deg) scale(1.03)`;});card.addEventListener('mouseleave',()=>{card.style.transform='';});});
+
+/* 3D SCROLL PARALLAX on sections */
+window.addEventListener('scroll',()=>{document.querySelectorAll('#team,#skills,#testimonials').forEach(sec=>{const r=sec.getBoundingClientRect();const p=(r.top/window.innerHeight);if(p>1.5||p<-1)return;sec.style.transform=`perspective(1200px) rotateX(${p*2}deg)`;sec.style.transformOrigin='center center';});},{passive:true});
+
+/* SMOOTH NAV SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const target=document.querySelector(a.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
 </body>
 </html>
