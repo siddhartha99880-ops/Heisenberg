@@ -40,8 +40,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:8000;display:flex;align-items:ce
 /* HERO */
 #hero-pin{position:relative;height:300vh}
 #hero-sticky{position:sticky;top:0;height:100vh;overflow:hidden}
-#hero-frame{position:absolute;inset:0;overflow:hidden;transform-origin:center;background:#080604}
+#hero-frame{position:absolute;inset:0;overflow:hidden;transform-origin:center;background:#080604;will-change:transform,clip-path;transition:transform .15s linear,clip-path .15s linear}
 #hero-art{position:absolute;top:0;left:0;width:200%;height:100%;will-change:transform}
+#page-reveal{will-change:height}
+#hero-text{will-change:transform,opacity}
 .art-canvas{width:100%;height:100%;position:relative;background:linear-gradient(180deg,#050302 0%,#0d0806 40%,#1a0f08 70%,#0a0604 100%);overflow:hidden}
 #katana-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}
 .art-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,71,255,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,71,255,0.05) 1px,transparent 1px);background-size:100px 100px;animation:gridBreath 8s ease-in-out infinite}
