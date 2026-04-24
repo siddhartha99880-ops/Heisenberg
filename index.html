@@ -645,7 +645,7 @@ let sTick=false;
 window.addEventListener('scroll',()=>{if(!sTick){sTick=true;requestAnimationFrame(()=>{
   const h=document.documentElement;progressBar.style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+'%';
   const pinTop=heroPin.getBoundingClientRect().top,totalScroll=heroPin.offsetHeight-window.innerHeight,scrolled=-pinTop;
-  if(scrolled>=0&&scrolled<=totalScroll){const p=scrolled/totalScroll;const fp=Math.min(p/.55,1);heroFrame.style.transform=`scale(${1-fp*.13})`;heroFrame.style.borderRadius=fp*14+'px';heroFrame.style.margin=fp*44+'px';
+  if(scrolled>=0&&scrolled<=totalScroll){const p=scrolled/totalScroll;const fp=Math.min(p/.55,1);const m=fp*44;heroFrame.style.transform=`scale(${1-fp*.13})`;heroFrame.style.clipPath=`inset(${m}px round ${fp*14}px)`;
     pageReveal.style.height=(Math.max(0,Math.min((p-.15)/.75,1))*100)+'%';const tf=Math.max(0,1-p*4);heroText.style.opacity=tf;heroText.style.transform=`translateY(${p*-90}px)`;
     if(heroScanLines)heroScanLines.style.opacity=Math.max(0,1-p*3);heroArt.style.transform=`translateX(${-p*4}%)`;}
   const st=document.getElementById('studio');if(st){const sr=st.getBoundingClientRect(),sp=-sr.top/sr.height;if(sp>-.1&&sp<1.2)document.querySelectorAll('.studio-orb').forEach((o,i)=>{o.style.transform=`translate(-50%,-50%) translateY(${sp*(i+1)*22}px) rotate(${sp*30*(i+1)}deg)`;});}
