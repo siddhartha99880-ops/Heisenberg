@@ -160,12 +160,48 @@ nav{position:fixed;top:0;left:0;right:0;z-index:8000;display:flex;align-items:ce
 .skills-title{font-family:'Instrument Serif',serif;font-size:clamp(36px,4vw,56px);font-weight:400;margin-bottom:80px}
 .skills-title em{font-style:italic;color:#7BA7FF}
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1200px;margin:0 auto}
-.skill-node{padding:48px 32px;border:1px solid rgba(244,242,238,.08);position:relative;transition:all .4s;overflow:hidden}
-.skill-node::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--cobalt);transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.skill-node{padding:48px 32px;border:1px solid rgba(244,242,238,.08);position:relative;transition:all .4s;overflow:hidden;z-index:1}
+.skill-node::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--cobalt);transform:scaleX(0);transform-origin:left;transition:transform .6s;z-index:3}
 .skill-node:hover::before{transform:scaleX(1)}
-.skill-node:hover{background:rgba(0,71,255,.06);border-color:rgba(0,71,255,.2)}
-.skill-name{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;margin-bottom:12px}
-.skill-tools{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(244,242,238,.35);letter-spacing:.05em}
+.skill-node:hover{background:rgba(0,71,255,.02);border-color:rgba(0,71,255,.3);transform:scale(1.03);z-index:10;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+.skill-name{font-family:'Instrument Serif',serif;font-size:28px;font-weight:400;margin-bottom:12px;position:relative;z-index:2;transition:transform .4s}
+.skill-tools{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(244,242,238,.35);letter-spacing:.05em;position:relative;z-index:2;transition:transform .4s}
+.skill-node:hover .skill-name{transform:translateY(-4px)}
+.skill-node:hover .skill-tools{transform:translateY(-2px)}
+
+/* SKILL ANIMATED BACKGROUNDS */
+.skill-bg{position:absolute;inset:-20%;z-index:0;opacity:0;pointer-events:none;transition:all .6s cubic-bezier(.16,1,.3,1);transform:scale(1.15)}
+.skill-node:hover .skill-bg{opacity:1;transform:scale(1)}
+/* Video */
+.vid-bg{background:radial-gradient(circle at center,rgba(0,71,255,.1) 0%,transparent 60%)}
+.vid-t{position:absolute;top:50%;left:20%;right:20%;height:2px;background:rgba(255,255,255,.1)}
+.vid-t::before{content:'';position:absolute;inset:0 50% 0 10%;background:var(--cobalt)}
+.vid-t::after{content:'';position:absolute;inset:0 20% 0 60%;background:var(--green)}
+.vid-p{position:absolute;top:40%;bottom:40%;width:2px;background:#fff;left:20%;animation:vP 2s ease-in-out infinite alternate;box-shadow:0 0 10px #fff}
+@keyframes vP{0%{left:20%}100%{left:80%}}
+/* Graphic */
+.gd-bg{background:radial-gradient(circle at center,rgba(29,185,84,.08) 0%,transparent 60%)}
+.gd-s{position:absolute;border:1.5px solid rgba(255,255,255,.1);animation:gS 8s linear infinite}
+.gd-s.c{width:120px;height:120px;border-radius:50%;top:10%;left:10%;border-color:rgba(0,71,255,.4)}
+.gd-s.s{width:90px;height:90px;bottom:10%;right:10%;border-color:rgba(29,185,84,.4);animation-direction:reverse}
+@keyframes gS{0%{transform:rotate(0deg) scale(.8)}50%{transform:rotate(180deg) scale(1.1)}100%{transform:rotate(360deg) scale(.8)}}
+/* Dev */
+.dev-bg{background:radial-gradient(circle at center,rgba(0,71,255,.1) 0%,transparent 60%)}
+.dev-c{position:absolute;inset:0;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,71,255,.15);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;animation:dS 10s linear infinite}
+@keyframes dS{0%{transform:translateY(-10%)}100%{transform:translateY(10%)}}
+/* UI */
+.ui-bg{background:linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px) 0 0/30px 30px,linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px) 0 0/30px 30px}
+.ui-c{position:absolute;width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--cobalt);transform:rotate(-25deg);top:50%;left:50%;animation:uM 3s ease-in-out infinite;filter:drop-shadow(0 0 4px var(--cobalt))}
+@keyframes uM{0%,100%{top:50%;left:50%}25%{top:30%;left:70%}50%{top:60%;left:60%}75%{top:40%;left:30%}}
+/* Brand */
+.brand-bg{display:flex;align-items:center;justify-content:center}
+.brand-r{position:absolute;border:1px solid rgba(255,255,255,.1);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);animation:bP 3s ease-out infinite}
+.brand-r:nth-child(2){animation-delay:1s}.brand-r:nth-child(3){animation-delay:2s}
+@keyframes bP{0%{width:0;height:0;opacity:1;border-color:var(--cobalt)}100%{width:250px;height:250px;opacity:0;border-color:var(--paper)}}
+/* Motion */
+.motion-bg{background:radial-gradient(circle at center,rgba(29,185,84,.08) 0%,transparent 60%)}
+.motion-b{position:absolute;width:10px;height:10px;background:var(--green);border-radius:50%;left:15%;top:50%;animation:mB 1.5s cubic-bezier(.36,0,.66,-.56) infinite alternate;box-shadow:0 0 10px var(--green)}
+@keyframes mB{0%{left:15%;transform:translateY(0) scaleX(1.2) scaleY(.8)}10%{transform:translateY(0) scaleX(1) scaleY(1)}50%{transform:translateY(-60px)}90%{transform:translateY(0) scaleX(1) scaleY(1)}100%{left:85%;transform:translateY(0) scaleX(1.2) scaleY(.8)}}
 
 /* 3D LOGO */
 #logo3d-section{padding:120px 48px;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;border-top:1px solid var(--border);overflow:hidden}
@@ -513,12 +549,30 @@ footer{padding:24px;flex-direction:column;gap:12px}
   <div class="skills-header rev">Capability Nodes</div>
   <h2 class="skills-title rev rev-d1">An interconnected network of<br><em>specialized expertise.</em></h2>
   <div class="skills-grid">
-    <div class="skill-node rev"><div class="skill-name">Video Editing</div><div class="skill-tools">Premiere Pro • After Effects • DaVinci Resolve</div></div>
-    <div class="skill-node rev rev-d1"><div class="skill-name">Graphic Design</div><div class="skill-tools">Photoshop • Illustrator • Figma</div></div>
-    <div class="skill-node rev rev-d2"><div class="skill-name">Full Stack Dev</div><div class="skill-tools">React • Node.js • Three.js • Python</div></div>
-    <div class="skill-node rev rev-d3"><div class="skill-name">UI/UX Design</div><div class="skill-tools">Prototyping • User Research • Interaction Design</div></div>
-    <div class="skill-node rev"><div class="skill-name">Branding</div><div class="skill-tools">Strategy • Identity Systems • Guidelines</div></div>
-    <div class="skill-node rev rev-d1"><div class="skill-name">Motion Graphics</div><div class="skill-tools">After Effects • Cinema 4D • Blender</div></div>
+    <div class="skill-node rev">
+      <div class="skill-bg vid-bg"><div class="vid-t"></div><div class="vid-p"></div></div>
+      <div class="skill-name">Video Editing</div><div class="skill-tools">Premiere Pro • After Effects • DaVinci Resolve</div>
+    </div>
+    <div class="skill-node rev rev-d1">
+      <div class="skill-bg gd-bg"><div class="gd-s c"></div><div class="gd-s s"></div></div>
+      <div class="skill-name">Graphic Design</div><div class="skill-tools">Photoshop • Illustrator • Figma</div>
+    </div>
+    <div class="skill-node rev rev-d2">
+      <div class="skill-bg dev-bg"><div class="dev-c"><span>&lt;div class="hero"&gt;</span><span>function ship() {</span><span>  return success;</span><span>}</span><span>&lt;/div&gt;</span></div></div>
+      <div class="skill-name">Full Stack Dev</div><div class="skill-tools">React • Node.js • Three.js • Python</div>
+    </div>
+    <div class="skill-node rev rev-d3">
+      <div class="skill-bg ui-bg"><div class="ui-c"></div></div>
+      <div class="skill-name">UI/UX Design</div><div class="skill-tools">Prototyping • User Research • Interaction Design</div>
+    </div>
+    <div class="skill-node rev">
+      <div class="skill-bg brand-bg"><div class="brand-r"></div><div class="brand-r"></div><div class="brand-r"></div></div>
+      <div class="skill-name">Branding</div><div class="skill-tools">Strategy • Identity Systems • Guidelines</div>
+    </div>
+    <div class="skill-node rev rev-d1">
+      <div class="skill-bg motion-bg"><div class="motion-b"></div></div>
+      <div class="skill-name">Motion Graphics</div><div class="skill-tools">After Effects • Cinema 4D • Blender</div>
+    </div>
   </div>
 </section>
 
