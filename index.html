@@ -81,7 +81,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:8000;display:flex;align-items:ce
 .hero-scroll-hint{position:absolute;bottom:32px;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn .6s 1.3s forwards}
 .hero-scroll-hint span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,242,238,.25)}
 .scroll-bar{width:1px;height:44px;background:linear-gradient(to bottom,rgba(0,71,255,.8),transparent);animation:scrollPulse 2s ease-in-out infinite}
-#page-reveal{position:absolute;bottom:0;left:0;right:0;height:0%;background:var(--paper);z-index:30}
+#page-reveal{position:absolute;inset:0;background:#050302;z-index:30;opacity:0;pointer-events:none}
 
 /* SCREEN SHAKE */
 @keyframes screenShake{0%{transform:translate(0,0)}25%{transform:translate(-3px,2px)}50%{transform:translate(2px,-3px)}75%{transform:translate(-2px,1px)}100%{transform:translate(0,0)}}
@@ -777,8 +777,8 @@ let sTick=false;
 window.addEventListener('scroll',()=>{if(!sTick){sTick=true;requestAnimationFrame(()=>{
   const h=document.documentElement;window.scrollProgress=(h.scrollTop/(h.scrollHeight-h.clientHeight));
   const pinTop=heroPin.getBoundingClientRect().top,totalScroll=heroPin.offsetHeight-window.innerHeight,scrolled=-pinTop;
-  if(scrolled>=0&&scrolled<=totalScroll){const p=scrolled/totalScroll;const fp=Math.min(p/.55,1);const m=fp*44;heroFrame.style.transform=`scale(${1-fp*.13})`;heroFrame.style.clipPath=`inset(${m}px round ${fp*14}px)`;
-    pageReveal.style.height=(Math.max(0,Math.min((p-.15)/.75,1))*100)+'%';const tf=Math.max(0,1-p*4);heroText.style.opacity=tf;heroText.style.transform=`translateY(${p*-90}px)`;
+  if(scrolled>=0&&scrolled<=totalScroll){const p=scrolled/totalScroll;const fp=Math.min(p/.55,1);heroFrame.style.filter=`blur(${fp*12}px)`;
+    pageReveal.style.opacity=Math.max(0,Math.min((p-.15)/.75,1));const tf=Math.max(0,1-p*4);heroText.style.opacity=tf;heroText.style.transform=`translateY(${p*-90}px)`;
     if(heroScanLines)heroScanLines.style.opacity=Math.max(0,1-p*3);heroArt.style.transform=`translateX(${-p*4}%)`;}
   const st=document.getElementById('studio');if(st){const sr=st.getBoundingClientRect(),sp=-sr.top/sr.height;if(sp>-.1&&sp<1.2)document.querySelectorAll('.studio-orb').forEach((o,i)=>{o.style.transform=`translate(-50%,-50%) translateY(${sp*(i+1)*22}px) rotate(${sp*30*(i+1)}deg)`;});}
   document.querySelectorAll('#team,#skills,#testimonials').forEach(s=>{const r=s.getBoundingClientRect(),p2=r.top/window.innerHeight;if(p2<1.5&&p2>-1)s.style.transform=`perspective(1200px) rotateX(${p2*1.5}deg)`;});
