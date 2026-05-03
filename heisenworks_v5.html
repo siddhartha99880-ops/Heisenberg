@@ -14,8 +14,8 @@
 html,body{background:var(--paper)}
 body{font-family:'DM Sans',sans-serif;color:var(--ink);cursor:none;overflow-x:hidden}
 
-/* PROGRESS BAR */
-#progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cobalt),var(--green),var(--cobalt));z-index:9999;width:0%;transition:width .1s}
+/* DNA CANVAS */
+#dna-canvas{position:fixed;top:0;left:24px;width:60px;height:100vh;pointer-events:none;z-index:8500;mix-blend-mode:difference;opacity:.85}
 
 /* GRAIN */
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:0.04;pointer-events:none;z-index:9000;mix-blend-mode:multiply}
@@ -360,7 +360,7 @@ footer{padding:24px;flex-direction:column;gap:12px}
 </head>
 
 <body>
-<div id="progress-bar"></div>
+<canvas id="dna-canvas"></canvas>
 <div id="cur-dot"></div>
 <div id="cur-ring"></div>
 
@@ -697,8 +697,45 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
-/* PROGRESS BAR */
-const progressBar=document.getElementById('progress-bar');
+/* DNA SCROLL ANIMATION */
+window.scrollProgress = 0;
+const dnaCanvas = document.getElementById('dna-canvas');
+const dnaCtx = dnaCanvas.getContext('2d');
+function resizeDna() { dnaCanvas.width = dnaCanvas.offsetWidth; dnaCanvas.height = dnaCanvas.offsetHeight; }
+window.addEventListener('resize', resizeDna);
+resizeDna();
+function drawDna() {
+  dnaCtx.clearRect(0, 0, dnaCanvas.width, dnaCanvas.height);
+  const w = dnaCanvas.width, h = dnaCanvas.height, centerY = h / 2, centerX = w / 2;
+  const nodes = 45, spacing = h / nodes, amplitude = w * 0.35, frequency = 0.15;
+  const phaseOffset = window.scrollProgress * Math.PI * 10;
+  dnaCtx.lineWidth = 1.5;
+  for (let i = 0; i <= nodes; i++) {
+    const y = i * spacing, phase = i * frequency + phaseOffset;
+    const x1 = centerX + Math.sin(phase) * amplitude, x2 = centerX + Math.sin(phase + Math.PI) * amplitude;
+    const isActive = window.scrollProgress >= (i / nodes);
+    dnaCtx.beginPath(); dnaCtx.moveTo(x1, y); dnaCtx.lineTo(x2, y);
+    dnaCtx.strokeStyle = isActive ? 'rgba(0,71,255,0.4)' : 'rgba(155,152,144,0.1)'; dnaCtx.stroke();
+    dnaCtx.beginPath(); dnaCtx.arc(x1, y, 2.5, 0, Math.PI * 2);
+    dnaCtx.fillStyle = isActive ? '#0047FF' : 'rgba(155,152,144,0.2)'; dnaCtx.fill();
+    dnaCtx.beginPath(); dnaCtx.arc(x2, y, 2.5, 0, Math.PI * 2);
+    dnaCtx.fillStyle = isActive ? '#1DB954' : 'rgba(155,152,144,0.2)'; dnaCtx.fill();
+  }
+  dnaCtx.beginPath();
+  for (let i = 0; i <= nodes; i++) {
+    const y = i * spacing, phase = i * frequency + phaseOffset, x1 = centerX + Math.sin(phase) * amplitude;
+    if(i===0) dnaCtx.moveTo(x1, y); else dnaCtx.lineTo(x1, y);
+  }
+  dnaCtx.strokeStyle = 'rgba(0,71,255,0.25)'; dnaCtx.stroke();
+  dnaCtx.beginPath();
+  for (let i = 0; i <= nodes; i++) {
+    const y = i * spacing, phase = i * frequency + phaseOffset, x2 = centerX + Math.sin(phase + Math.PI) * amplitude;
+    if(i===0) dnaCtx.moveTo(x2, y); else dnaCtx.lineTo(x2, y);
+  }
+  dnaCtx.strokeStyle = 'rgba(29,185,84,0.25)'; dnaCtx.stroke();
+  requestAnimationFrame(drawDna);
+}
+requestAnimationFrame(drawDna);
 
 /* CURSOR - throttled trail: 1 in 4 moves */
 const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
@@ -738,7 +775,7 @@ document.getElementById('hero-sticky').addEventListener('click',e=>{const r=kCan
 const heroPin=document.getElementById('hero-pin'),heroFrame=document.getElementById('hero-frame'),heroText=document.getElementById('hero-text'),pageReveal=document.getElementById('page-reveal'),heroArt=document.getElementById('hero-art'),heroScanLines=document.querySelector('.hero-scan-lines');
 let sTick=false;
 window.addEventListener('scroll',()=>{if(!sTick){sTick=true;requestAnimationFrame(()=>{
-  const h=document.documentElement;progressBar.style.width=((h.scrollTop/(h.scrollHeight-h.clientHeight))*100)+'%';
+  const h=document.documentElement;window.scrollProgress=(h.scrollTop/(h.scrollHeight-h.clientHeight));
   const pinTop=heroPin.getBoundingClientRect().top,totalScroll=heroPin.offsetHeight-window.innerHeight,scrolled=-pinTop;
   if(scrolled>=0&&scrolled<=totalScroll){const p=scrolled/totalScroll;const fp=Math.min(p/.55,1);const m=fp*44;heroFrame.style.transform=`scale(${1-fp*.13})`;heroFrame.style.clipPath=`inset(${m}px round ${fp*14}px)`;
     pageReveal.style.height=(Math.max(0,Math.min((p-.15)/.75,1))*100)+'%';const tf=Math.max(0,1-p*4);heroText.style.opacity=tf;heroText.style.transform=`translateY(${p*-90}px)`;
