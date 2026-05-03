@@ -704,7 +704,10 @@ const dnaCtx = dnaCanvas.getContext('2d');
 function resizeDna() { dnaCanvas.width = dnaCanvas.offsetWidth; dnaCanvas.height = dnaCanvas.offsetHeight; }
 window.addEventListener('resize', resizeDna);
 resizeDna();
+let lastDnaScroll = -1;
 function drawDna() {
+  if (Math.abs(lastDnaScroll - window.scrollProgress) < 0.0001) { requestAnimationFrame(drawDna); return; }
+  lastDnaScroll = window.scrollProgress;
   dnaCtx.clearRect(0, 0, dnaCanvas.width, dnaCanvas.height);
   const w = dnaCanvas.width, h = dnaCanvas.height, centerY = h / 2, centerX = w / 2;
   const nodes = 45, spacing = h / nodes, amplitude = w * 0.35, frequency = 0.15;
@@ -764,9 +767,12 @@ function dK(){kCtx.clearRect(0,0,kCanvas.width,kCanvas.height);
   sP.forEach(p=>{if(p.life<=0)return;const c=p.h===215?`rgba(100,180,255,${p.life})`:`rgba(30,185,84,${p.life*.7})`;kCtx.beginPath();kCtx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);kCtx.fillStyle=c;kCtx.fill();p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.life-=.025;});
   sP=sP.filter(p=>p.life>0);
   if(sT.length||sP.length||sF>0)requestAnimationFrame(dK);else kRun=false;}
-function autoSlash(){const w=kCanvas.width,h=kCanvas.height;const ty=[()=>({x1:w*(.05+Math.random()*.3),y1:h*(.1+Math.random()*.3),x2:w*(.05+Math.random()*.3)+w*(.4+Math.random()*.3),y2:h*(.1+Math.random()*.3)+h*(.3+Math.random()*.3)}),()=>({x1:w*(.5+Math.random()*.4),y1:h*(.05+Math.random()*.3),x2:w*(.5+Math.random()*.4)-w*(.35+Math.random()*.25),y2:h*(.05+Math.random()*.3)+h*(.3+Math.random()*.35)}),()=>{const sy=h*(.25+Math.random()*.5);return{x1:w*.02,y1:sy-h*.05,x2:w*.9,y2:sy+h*.03};}];
-  const t=ty[Math.floor(Math.random()*3)]();sT.push(new Slash(t.x1,t.y1,t.x2,t.y2));
-  if(Math.random()<.3)setTimeout(()=>{const t2=ty[Math.floor(Math.random()*3)]();sT.push(new Slash(t2.x1,t2.y1,t2.x2,t2.y2));},150);
+function autoSlash(){
+  if (window.scrollY < window.innerHeight * 2.5) {
+    const w=kCanvas.width,h=kCanvas.height;const ty=[()=>({x1:w*(.05+Math.random()*.3),y1:h*(.1+Math.random()*.3),x2:w*(.05+Math.random()*.3)+w*(.4+Math.random()*.3),y2:h*(.1+Math.random()*.3)+h*(.3+Math.random()*.3)}),()=>({x1:w*(.5+Math.random()*.4),y1:h*(.05+Math.random()*.3),x2:w*(.5+Math.random()*.4)-w*(.35+Math.random()*.25),y2:h*(.05+Math.random()*.3)+h*(.3+Math.random()*.35)}),()=>{const sy=h*(.25+Math.random()*.5);return{x1:w*.02,y1:sy-h*.05,x2:w*.9,y2:sy+h*.03};}];
+    const t=ty[Math.floor(Math.random()*3)]();sT.push(new Slash(t.x1,t.y1,t.x2,t.y2));
+    if(Math.random()<.3)setTimeout(()=>{const t2=ty[Math.floor(Math.random()*3)]();sT.push(new Slash(t2.x1,t2.y1,t2.x2,t2.y2));},150);
+  }
   setTimeout(autoSlash,3000+Math.random()*3000);}
 setTimeout(autoSlash,800);
 document.getElementById('hero-sticky').addEventListener('click',e=>{const r=kCanvas.getBoundingClientRect();const cx=e.clientX-r.left,cy=e.clientY-r.top;const a=-Math.PI/4+(Math.random()-.5)*.6,len=kCanvas.width*.5;sT.push(new Slash(cx-Math.cos(a)*len*.4,cy-Math.sin(a)*len*.4,cx+Math.cos(a)*len*.6,cy+Math.sin(a)*len*.6));});
@@ -777,15 +783,13 @@ let sTick=false;
 window.addEventListener('scroll',()=>{if(!sTick){sTick=true;requestAnimationFrame(()=>{
   const h=document.documentElement;window.scrollProgress=(h.scrollTop/(h.scrollHeight-h.clientHeight));
   const pinTop=heroPin.getBoundingClientRect().top,totalScroll=heroPin.offsetHeight-window.innerHeight,scrolled=-pinTop;
-  if(scrolled>=0&&scrolled<=totalScroll){const p=scrolled/totalScroll;const fp=Math.min(p/.55,1);heroFrame.style.filter=`blur(${fp*12}px)`;
+  if(scrolled>=0&&scrolled<=totalScroll){const p=scrolled/totalScroll;
     pageReveal.style.opacity=Math.max(0,Math.min((p-.15)/.75,1));const tf=Math.max(0,1-p*4);heroText.style.opacity=tf;heroText.style.transform=`translateY(${p*-90}px)`;
     if(heroScanLines)heroScanLines.style.opacity=Math.max(0,1-p*3);heroArt.style.transform=`translateX(${-p*4}%)`;}
-  const st=document.getElementById('studio');if(st){const sr=st.getBoundingClientRect(),sp=-sr.top/sr.height;if(sp>-.1&&sp<1.2)document.querySelectorAll('.studio-orb').forEach((o,i)=>{o.style.transform=`translate(-50%,-50%) translateY(${sp*(i+1)*22}px) rotate(${sp*30*(i+1)}deg)`;});}
-  document.querySelectorAll('#team,#skills,#testimonials').forEach(s=>{const r=s.getBoundingClientRect(),p2=r.top/window.innerHeight;if(p2<1.5&&p2>-1)s.style.transform=`perspective(1200px) rotateX(${p2*1.5}deg)`;});
   sTick=false;});}},{passive:true});
 
 /* SCAN SPARKS - reduced */
-(function(){const l=document.querySelector('.hero-scan-lines');if(!l)return;setInterval(()=>{const s=document.createElement('div');s.className='scan-spark';s.style.left=(10+Math.random()*80)+'%';s.style.top=(5+Math.random()*90)+'%';s.style.zIndex=22;l.appendChild(s);setTimeout(()=>s.remove(),700);},1500);})();
+(function(){const l=document.querySelector('.hero-scan-lines');if(!l)return;setInterval(()=>{if(window.scrollY>window.innerHeight*2.5)return;const s=document.createElement('div');s.className='scan-spark';s.style.left=(10+Math.random()*80)+'%';s.style.top=(5+Math.random()*90)+'%';s.style.zIndex=22;l.appendChild(s);setTimeout(()=>s.remove(),700);},1500);})();
 
 /* CODE PARTICLES - 6 instead of 12 */
 (function(){const sn=['const x = observe()','fn ship()','// heisenberg','async build()','await ship()','.map(adapt)'];const c=document.querySelector('.art-canvas');if(!c)return;sn.forEach((t,i)=>{const p=document.createElement('div');p.className='code-particle';p.textContent=t;p.style.left=(5+Math.random()*85)+'%';p.style.top=(10+Math.random()*80)+'%';p.style.animationDuration=(10+Math.random()*10)+'s';p.style.animationDelay=(i*1.5)+'s';c.appendChild(p);});})();
