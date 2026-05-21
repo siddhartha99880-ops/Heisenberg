@@ -48,24 +48,6 @@
           <input type="password" class="settings-input" id="settings-key" placeholder="AIzaSy...">
         </div>
 
-        <div style="border-top: 1px solid rgba(244, 242, 238, 0.08); margin: 12px 0 6px; padding-top: 6px;"></div>
-
-        <div class="settings-h">✉️ EMAILJS LEAD ROUTING</div>
-        <p class="settings-desc">Route captured client emails and transcripts directly to <strong>heisenworks1@gmail.com</strong>.</p>
-        
-        <div class="settings-field" style="margin-bottom: 6px;">
-          <label class="settings-label">EmailJS Service ID</label>
-          <input type="text" class="settings-input" id="settings-emailjs-service" placeholder="service_xxxxxx">
-        </div>
-        <div class="settings-field" style="margin-bottom: 6px;">
-          <label class="settings-label">EmailJS Template ID</label>
-          <input type="text" class="settings-input" id="settings-emailjs-template" placeholder="template_xxxxxx">
-        </div>
-        <div class="settings-field" style="margin-bottom: 12px;">
-          <label class="settings-label">EmailJS Public Key</label>
-          <input type="text" class="settings-input" id="settings-emailjs-public" placeholder="user_xxxxxx or xxxxxx">
-        </div>
-
         <div class="settings-actions">
           <button class="btn-primary" id="settings-save">Save &amp; Connect</button>
           <button class="btn-secondary" id="settings-demo">Demo / Mock Mode</button>
@@ -172,9 +154,9 @@ CLOSING MOVE:
     if (isSettingsOpen) {
       settingsOverlay.classList.add('open');
       keyInput.value = apiKey;
-      emailjsServiceInput.value = emailjsServiceId;
-      emailjsTemplateInput.value = emailjsTemplateId;
-      emailjsPublicInput.value = emailjsPublicKey;
+      if (emailjsServiceInput) emailjsServiceInput.value = emailjsServiceId;
+      if (emailjsTemplateInput) emailjsTemplateInput.value = emailjsTemplateId;
+      if (emailjsPublicInput) emailjsPublicInput.value = emailjsPublicKey;
     } else {
       settingsOverlay.classList.remove('open');
     }
@@ -183,9 +165,9 @@ CLOSING MOVE:
   // Save API Key & EmailJS Credentials
   saveKeyBtn.addEventListener('click', () => {
     const key = keyInput.value.trim();
-    const service = emailjsServiceInput.value.trim();
-    const template = emailjsTemplateInput.value.trim();
-    const pubKey = emailjsPublicInput.value.trim();
+    const service = emailjsServiceInput ? emailjsServiceInput.value.trim() : '';
+    const template = emailjsTemplateInput ? emailjsTemplateInput.value.trim() : '';
+    const pubKey = emailjsPublicInput ? emailjsPublicInput.value.trim() : '';
 
     // Persist Gemini API Key
     if (key) {
@@ -202,22 +184,24 @@ CLOSING MOVE:
       connectionStatus.style.color = "var(--muted)";
     }
 
-    // Persist EmailJS Credentials
-    emailjsServiceId = service;
-    emailjsTemplateId = template;
-    emailjsPublicKey = pubKey;
+    // Persist EmailJS Credentials (if inputs were present, otherwise preserve existing state)
+    if (emailjsServiceInput && emailjsTemplateInput && emailjsPublicInput) {
+      emailjsServiceId = service;
+      emailjsTemplateId = template;
+      emailjsPublicKey = pubKey;
 
-    if (service) localStorage.setItem('emailjs_service_id', service);
-    else localStorage.removeItem('emailjs_service_id');
+      if (service) localStorage.setItem('emailjs_service_id', service);
+      else localStorage.removeItem('emailjs_service_id');
 
-    if (template) localStorage.setItem('emailjs_template_id', template);
-    else localStorage.removeItem('emailjs_template_id');
+      if (template) localStorage.setItem('emailjs_template_id', template);
+      else localStorage.removeItem('emailjs_template_id');
 
-    if (pubKey) localStorage.setItem('emailjs_public_key', pubKey);
-    else localStorage.removeItem('emailjs_public_key');
+      if (pubKey) localStorage.setItem('emailjs_public_key', pubKey);
+      else localStorage.removeItem('emailjs_public_key');
 
-    if (service && template && pubKey) {
-      addSystemMessage("SECURE METADATA: EMAILJS TRANSCRIPT ROUTING ARMED.");
+      if (service && template && pubKey) {
+        addSystemMessage("SECURE METADATA: EMAILJS TRANSCRIPT ROUTING ARMED.");
+      }
     }
 
     isSettingsOpen = false;
@@ -331,7 +315,7 @@ CLOSING MOVE:
     const emailMatch = text.match(emailRegex);
     if (emailMatch && !isTranscriptSent) {
       const clientEmail = emailMatch[1];
-      if (clientEmail.toLowerCase() !== 'heisenworks1@gmail.com' && clientEmail.toLowerCase() !== 'info@heisenworks.studio') {
+      if (clientEmail.toLowerCase() !== 'heisenworks1@gmail.com') {
         sendTranscriptViaEmailJS(clientEmail, text);
       }
     }
