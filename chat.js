@@ -19,9 +19,6 @@
           <div class="chat-title">heisenworks.studio</div>
           <div class="chat-status" id="chat-connection-status">SECURE &amp; ENCRYPTED</div>
         </div>
-        <div class="chat-actions">
-          <button class="chat-btn" id="chat-settings-btn" title="Secure Channel Settings">⚙️</button>
-        </div>
       </div>
       
       <div class="chat-messages" id="chat-messages">
@@ -37,21 +34,6 @@
       <div class="chat-input-area">
         <input type="text" class="chat-input" id="chat-input" placeholder="Type a secure message..." autocomplete="off">
         <button class="chat-send-btn" id="chat-send-btn">⟶</button>
-      </div>
-      
-      <div id="chat-settings">
-        <div class="settings-h">⚙️ SECURE INTERACTION KEYS</div>
-        <p class="settings-desc">Your chat operates over a secure client channel. Provide your API keys below. Stored locally in your browser, never shared.</p>
-        
-        <div class="settings-field">
-          <label class="settings-label">Gemini API Key</label>
-          <input type="password" class="settings-input" id="settings-key" placeholder="AIzaSy...">
-        </div>
-
-        <div class="settings-actions">
-          <button class="btn-primary" id="settings-save">Save &amp; Connect</button>
-          <button class="btn-secondary" id="settings-demo">Demo / Mock Mode</button>
-        </div>
       </div>
     </div>
   `;
@@ -69,18 +51,8 @@
   const messagesContainer = document.getElementById('chat-messages');
   const input = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send-btn');
-  const settingsBtn = document.getElementById('chat-settings-btn');
-  const settingsOverlay = document.getElementById('chat-settings');
-  const keyInput = document.getElementById('settings-key');
-  const saveKeyBtn = document.getElementById('settings-save');
-  const useDemoBtn = document.getElementById('settings-demo');
   const suggestionsContainer = document.getElementById('chat-suggestions');
   const connectionStatus = document.getElementById('chat-connection-status');
-  
-  // EmailJS DOM Elements
-  const emailjsServiceInput = document.getElementById('settings-emailjs-service');
-  const emailjsTemplateInput = document.getElementById('settings-emailjs-template');
-  const emailjsPublicInput = document.getElementById('settings-emailjs-public');
 
   // ── PRODUCTION CREDENTIALS (Fill these to enable out-of-the-box routing for all visitors) ──
   const DEFAULT_EMAILJS_SERVICE_ID = ''; // e.g. 'service_xxxxxx'
@@ -89,8 +61,7 @@
 
   // State Management
   let isChatOpen = false;
-  let isSettingsOpen = false;
-  let apiKey = localStorage.getItem('gemini_api_key') || '';
+  const apiKey = 'AIzaSyDzYAhER9Em_pHYKk_CqSTVXMvORCNIDiM';
   let emailjsServiceId = localStorage.getItem('emailjs_service_id') || DEFAULT_EMAILJS_SERVICE_ID;
   let emailjsTemplateId = localStorage.getItem('emailjs_template_id') || DEFAULT_EMAILJS_TEMPLATE_ID;
   let emailjsPublicKey = localStorage.getItem('emailjs_public_key') || DEFAULT_EMAILJS_PUBLIC_KEY;
@@ -147,77 +118,7 @@ CLOSING MOVE:
     }
   });
 
-  // Settings Panel toggle
-  settingsBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    isSettingsOpen = !isSettingsOpen;
-    if (isSettingsOpen) {
-      settingsOverlay.classList.add('open');
-      keyInput.value = apiKey;
-      if (emailjsServiceInput) emailjsServiceInput.value = emailjsServiceId;
-      if (emailjsTemplateInput) emailjsTemplateInput.value = emailjsTemplateId;
-      if (emailjsPublicInput) emailjsPublicInput.value = emailjsPublicKey;
-    } else {
-      settingsOverlay.classList.remove('open');
-    }
-  });
 
-  // Save API Key & EmailJS Credentials
-  saveKeyBtn.addEventListener('click', () => {
-    const key = keyInput.value.trim();
-    const service = emailjsServiceInput ? emailjsServiceInput.value.trim() : '';
-    const template = emailjsTemplateInput ? emailjsTemplateInput.value.trim() : '';
-    const pubKey = emailjsPublicInput ? emailjsPublicInput.value.trim() : '';
-
-    // Persist Gemini API Key
-    if (key) {
-      apiKey = key;
-      localStorage.setItem('gemini_api_key', key);
-      addSystemMessage("Channel secured.");
-      connectionStatus.innerHTML = "CONNECTED &amp; SECURED";
-      connectionStatus.style.color = "var(--green)";
-    } else {
-      apiKey = '';
-      localStorage.removeItem('gemini_api_key');
-      addSystemMessage("Offline mode.");
-      connectionStatus.innerHTML = "SECURE &amp; ENCRYPTED";
-      connectionStatus.style.color = "var(--muted)";
-    }
-
-    // Persist EmailJS Credentials (if inputs were present, otherwise preserve existing state)
-    if (emailjsServiceInput && emailjsTemplateInput && emailjsPublicInput) {
-      emailjsServiceId = service;
-      emailjsTemplateId = template;
-      emailjsPublicKey = pubKey;
-
-      if (service) localStorage.setItem('emailjs_service_id', service);
-      else localStorage.removeItem('emailjs_service_id');
-
-      if (template) localStorage.setItem('emailjs_template_id', template);
-      else localStorage.removeItem('emailjs_template_id');
-
-      if (pubKey) localStorage.setItem('emailjs_public_key', pubKey);
-      else localStorage.removeItem('emailjs_public_key');
-
-      if (service && template && pubKey) {
-        addSystemMessage("Routing active.");
-      }
-    }
-
-    isSettingsOpen = false;
-    settingsOverlay.classList.remove('open');
-  });
-
-  // Choose Demo Mode
-  useDemoBtn.addEventListener('click', () => {
-    apiKey = '';
-    localStorage.removeItem('gemini_api_key');
-    addSystemMessage("Offline mode.");
-    connectionStatus.innerHTML = "MOCK / OFFLINE MODE";
-    connectionStatus.style.color = "var(--muted)";
-    isSettingsOpen = false;
-    settingsOverlay.classList.remove('open');
-  });
 
   // Input actions
   input.addEventListener('keypress', (e) => {
