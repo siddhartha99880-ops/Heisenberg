@@ -16,7 +16,7 @@
     <div id="chat-box">
       <div class="chat-header">
         <div class="chat-header-info">
-          <div class="chat-title">heisenworks.studio <span>AI</span></div>
+          <div class="chat-title">heisenworks.studio</div>
           <div class="chat-status" id="chat-connection-status">SECURE &amp; ENCRYPTED</div>
         </div>
         <div class="chat-actions">
@@ -173,13 +173,13 @@ CLOSING MOVE:
     if (key) {
       apiKey = key;
       localStorage.setItem('gemini_api_key', key);
-      addSystemMessage("SECURE METADATA: ENCRYPTION INTELLIGENCE KEY LOADED SUCCESSFULLY.");
+      addSystemMessage("Channel secured.");
       connectionStatus.innerHTML = "CONNECTED &amp; SECURED";
       connectionStatus.style.color = "var(--green)";
     } else {
       apiKey = '';
       localStorage.removeItem('gemini_api_key');
-      addSystemMessage("SECURE METADATA: RUNNING IN STANDALONE OFFLINE MODE.");
+      addSystemMessage("Offline mode.");
       connectionStatus.innerHTML = "SECURE &amp; ENCRYPTED";
       connectionStatus.style.color = "var(--muted)";
     }
@@ -200,7 +200,7 @@ CLOSING MOVE:
       else localStorage.removeItem('emailjs_public_key');
 
       if (service && template && pubKey) {
-        addSystemMessage("SECURE METADATA: EMAILJS TRANSCRIPT ROUTING ARMED.");
+        addSystemMessage("Routing active.");
       }
     }
 
@@ -212,9 +212,9 @@ CLOSING MOVE:
   useDemoBtn.addEventListener('click', () => {
     apiKey = '';
     localStorage.removeItem('gemini_api_key');
-    addSystemMessage("SECURE METADATA: RUNNING IN STANDALONE OFFLINE MODE.");
+    addSystemMessage("Offline mode.");
     connectionStatus.innerHTML = "MOCK / OFFLINE MODE";
-    connectionStatus.style.color = "rgba(0, 71, 255, 0.75)";
+    connectionStatus.style.color = "var(--muted)";
     isSettingsOpen = false;
     settingsOverlay.classList.remove('open');
   });
@@ -237,19 +237,15 @@ CLOSING MOVE:
   // ── 3. VISUAL FLOWS & DISPLAY ──
 
   function showWelcomeSequence() {
-    addSystemMessage("SECURE ENCRYPTED CONNECTION ESTABLISHED");
-    setTimeout(() => {
-      addSystemMessage("REPRESENTATIVE: SENIOR PARTNER ONLINE");
-    }, 600);
     setTimeout(() => {
       addPartnerMessage("I speak for heisenworks.studio.\n\nWe build clean software systems. Tell me what you're creating.");
-    }, 1200);
+    }, 400);
   }
 
   function addSystemMessage(text) {
     const msg = document.createElement('div');
     msg.className = 'msg msg-system';
-    msg.innerHTML = `[ ${text} ]`;
+    msg.innerHTML = text;
     messagesContainer.appendChild(msg);
     scrollMessages();
   }
@@ -282,7 +278,7 @@ CLOSING MOVE:
     const msg = document.createElement('div');
     msg.className = 'msg msg-partner typing-indicator-msg';
     msg.innerHTML = `
-      <div class="msg-meta">PARTNER // DECRYPTING INTEL...</div>
+      <div class="msg-meta">PARTNER // TYPING...</div>
       <div class="msg-content">
         <div class="typing-dots">
           <span></span><span></span><span></span>
@@ -348,7 +344,7 @@ CLOSING MOVE:
     if (emailjsServiceId && emailjsTemplateId && emailjsPublicKey) {
       if (emailjsInstance) {
         isTranscriptSent = true;
-        addSystemMessage("SECURE METADATA: TRANSMITTING LEAD DATA TO CENTRAL CORE...");
+        console.log("EmailJS routing: initiating transmission of transcript...");
 
         try {
           emailjsInstance.init({
@@ -378,23 +374,20 @@ CLOSING MOVE:
           emailjsInstance.send(emailjsServiceId, emailjsTemplateId, templateParams)
             .then((response) => {
               console.log('EmailJS Routing SUCCESS:', response.status, response.text);
-              addSystemMessage("SECURE METADATA: TRANSCRIPT ROUTED TO HEISENWORKS PARTNERS.");
             })
             .catch((err) => {
               console.error('EmailJS Routing FAILED:', err);
-              addSystemMessage("SECURE METADATA: ROUTING FAILED. VERIFY CREDENTIALS.");
               isTranscriptSent = false; // Allow retry on subsequent inputs
             });
         } catch (initErr) {
           console.error('EmailJS Init Exception:', initErr);
-          addSystemMessage("SECURE METADATA: TRANSCRIPT ROUTING INITIALIZATION EXCEPTION.");
           isTranscriptSent = false;
         }
       } else {
-        addSystemMessage("SECURE METADATA: EMAILJS SDK FAILED TO LOAD.");
+        console.warn("EmailJS SDK not found. Transmission aborted.");
       }
     } else {
-      addSystemMessage("SECURE METADATA: EMAIL DETECTED. CONFIGURE EMAILJS SECURE KEYS IN SETTINGS TO TRANSMIT TRANSCRIPT TO heisenworks1@gmail.com.");
+      console.log("EmailJS credentials not set. Lead transmission skipped.");
     }
   }
 
