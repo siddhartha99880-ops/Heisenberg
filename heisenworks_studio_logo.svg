@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="200" viewBox="0 0 800 200">
+  <style>
+    .text { font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 64px; }
+    .black { fill: #0A0A0A; }
+    .white { fill: #FAFAF9; }
+    .blue { fill: #0047FF; }
+  </style>
+  <rect width="100%" height="100%" fill="transparent" />
+  <text x="50" y="115" class="text black">heisenworks</text>
+  <rect x="525" y="55" width="315" height="85" class="blue" />
+  <text x="545" y="115" class="text white">.studio</text>
+</svg>
