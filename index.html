@@ -48,63 +48,34 @@
         <div id="hero-art">
           <div class="art-canvas">
             <div class="art-grid"></div>
-            
-            <!-- Matrix Style Vector Art -->
+                       <!-- Editorial Minimalist Grid & Subtle Geometric Centerpiece -->
             <svg id="hero-svg" style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
               <defs>
-                <filter id="blur2"><feGaussianBlur stdDeviation="6"/></filter>
-                <filter id="blur3"><feGaussianBlur stdDeviation="14"/></filter>
-                <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#0047FF" stop-opacity="0.18"/>
-                  <stop offset="100%" stop-color="#0047FF" stop-opacity="0"/>
-                </radialGradient>
-                <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#1DB954" stop-opacity="0.08"/>
-                  <stop offset="100%" stop-color="#1DB954" stop-opacity="0"/>
+                <radialGradient id="hero-radial-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#0047FF" stop-opacity="0.08"/>
+                  <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
                 </radialGradient>
               </defs>
-              <ellipse cx="800" cy="450" rx="700" ry="380" fill="url(#glow1)" filter="url(#blur3)"/>
-              <ellipse cx="400" cy="700" rx="300" ry="200" fill="url(#glowGreen)" filter="url(#blur2)"/>
-              <path d="M0,650 Q200,480 420,560 Q640,640 860,500 Q1080,360 1280,520 Q1440,610 1600,560 L1600,900 L0,900 Z" fill="#070503" opacity="0.95"/>
-              <path d="M0,700 Q320,580 640,660 Q960,740 1280,620 Q1440,570 1600,630 L1600,900 L0,900 Z" fill="#040302"/>
-              <g opacity="0.14" stroke="#0047FF" stroke-width="0.6" fill="none">
-                <line x1="100" y1="0" x2="100" y2="900"/><line x1="300" y1="0" x2="300" y2="900"/>
-                <line x1="500" y1="0" x2="500" y2="900"/><line x1="700" y1="0" x2="700" y2="900"/>
-                <line x1="900" y1="0" x2="900" y2="900"/><line x1="1100" y1="0" x2="1100" y2="900"/>
-                <line x1="0" y1="150" x2="1600" y2="150"/><line x1="0" y1="300" x2="1600" y2="300"/>
-                <line x1="0" y1="450" x2="1600" y2="450"/><line x1="0" y1="600" x2="1600" y2="600"/>
+              <rect width="100%" height="100%" fill="#080604"/>
+              <!-- Elegant center circle gradient -->
+              <circle cx="800" cy="450" r="450" fill="url(#hero-radial-glow)" />
+              <!-- Delicate editorial grid lines -->
+              <g stroke="rgba(244, 242, 238, 0.03)" stroke-width="1" fill="none">
+                <line x1="200" y1="0" x2="200" y2="900" />
+                <line x1="400" y1="0" x2="400" y2="900" />
+                <line x1="800" y1="0" x2="800" y2="900" />
+                <line x1="1200" y1="0" x2="1200" y2="900" />
+                <line x1="1400" y1="0" x2="1400" y2="900" />
+                <line x1="0" y1="150" x2="1600" y2="150" />
+                <line x1="0" y1="450" x2="1600" y2="450" />
+                <line x1="0" y1="750" x2="1600" y2="750" />
               </g>
-              <text x="110" y="160" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.22">const observe = (x) =&gt; x.map(adapt);</text>
-              <text x="920" y="220" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.18">fn ship(system: &amp;System) -&gt; Result;</text>
-              <text x="300" y="340" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.14">SELECT * FROM systems WHERE deadline = NULL;</text>
-              <text x="200" y="480" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.11">await Promise.all([think, ship, iterate]);</text>
-              <text x="720" y="395" font-family="JetBrains Mono" font-size="11" fill="#0047FF" opacity="0.16">impl Heisenberg for Software { fn observe() }</text>
-              <text x="60" y="520" font-family="JetBrains Mono" font-size="11" fill="#1DB954" opacity="0.12">// precision over velocity</text>
-              <g id="nodeNet">
-                <circle cx="100" cy="300" r="3.5" fill="#0047FF" opacity="0.55"/>
-                <circle cx="400" cy="200" r="3" fill="#0047FF" opacity="0.45"/>
-                <circle cx="700" cy="420" r="4.5" fill="#0047FF" opacity="0.65"/>
-                <circle cx="1000" cy="310" r="3.5" fill="#0047FF" opacity="0.45"/>
-                <circle cx="1300" cy="210" r="3" fill="#0047FF" opacity="0.4"/>
-                <circle cx="550" cy="520" r="2.5" fill="#0047FF" opacity="0.5"/>
-                <circle cx="1450" cy="350" r="3" fill="#1DB954" opacity="0.4"/>
-                <line x1="100" y1="300" x2="400" y2="200" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
-                <line x1="400" y1="200" x2="700" y2="420" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
-                <line x1="700" y1="420" x2="1000" y2="310" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
-                <line x1="1000" y1="310" x2="1300" y2="210" stroke="#0047FF" stroke-width="0.6" opacity="0.22"/>
-              </g>
-              <ellipse cx="800" cy="420" rx="220" ry="140" fill="url(#glow1)" filter="url(#blur2)"/>
+              <!-- Minimal abstract circle -->
+              <circle cx="800" cy="450" r="180" stroke="rgba(0, 71, 255, 0.12)" stroke-width="0.7" stroke-dasharray="4 8" fill="none" />
+              <circle cx="800" cy="450" r="120" stroke="rgba(244, 242, 238, 0.05)" stroke-width="0.7" fill="none" />
             </svg>
-            <canvas id="katana-canvas"></canvas>
           </div>
         </div>
-      </div>
-      
-      <!-- Scan Beam Elements -->
-      <div class="hero-scan-lines">
-        <div class="scan-beam"></div><div class="scan-beam"></div><div class="scan-beam"></div>
-        <div class="scan-beam"></div><div class="scan-beam"></div>
-        <div class="scan-col"></div><div class="scan-col"></div><div class="scan-col"></div>
       </div>
       <div id="page-reveal"></div>
       
@@ -122,17 +93,6 @@
     </div>
   </div>
 
-  <!-- 3D IMMERSIVE BRIDGE SECTION -->
-  <section id="immersive-3d">
-    <canvas id="scene3d"></canvas>
-    <div class="immersive-overlay">
-      <div class="immersive-tag">Observe · Adapt · Ship</div>
-      <h2 class="immersive-h">Where <em>precision</em><br>meets craft.</h2>
-      <p class="immersive-sub">A senior studio that builds systems designed to endure.</p>
-    </div>
-    <div class="immersive-scroll-cue"><span>Continue</span><div class="cue-arrow"></div></div>
-  </section>
-
   <!-- INTRO SECTION -->
   <section id="intro">
     <div class="intro-inner">
@@ -144,13 +104,6 @@
       <div class="intro-body">
         <p class="rev rev-d2">heisenworks.studio is a small, senior software studio based in India. We take on 3–4 projects per year — no more. Each one gets our full attention, from architecture to final pixel.</p>
         <p class="rev rev-d3">We believe the act of building software changes the problem. Like Heisenberg's principle — observation is never passive. We embed early, ask sharp questions, and build systems that last.</p>
-        <div class="terminal-block rev rev-d4" id="terminal">
-          <div class="terminal-line" data-delay="0">$ hw init --mode=precision</div>
-          <div class="terminal-line" data-delay="400">→ Scanning requirements...</div>
-          <div class="terminal-line" data-delay="800">→ Architecture: <span style="color:var(--green)">optimal</span></div>
-          <div class="terminal-line" data-delay="1200">→ Quality threshold: <span style="color:var(--green)">99.1%</span></div>
-          <div class="terminal-line" data-delay="1600">✓ Ready to ship.</div>
-        </div>
       </div>
     </div>
   </section>
@@ -164,6 +117,40 @@
       <span>Full Stack</span><span class="blue">·</span><span class="filled">India</span><span class="blue">·</span>
     </div>
   </div>
+
+  <!-- STORYTELLING SCROLL NARRATIVE SECTION -->
+  <section id="narrative-section">
+    <div class="narrative-sticky">
+      <div class="narrative-grid"></div>
+      
+      <div class="narrative-slide" id="n-slide-1">
+        <div class="slide-inner">
+          <div class="slide-eyebrow">01 / THE PHILOSOPHY</div>
+          <h2 class="slide-headline">In a world of fast code and template builders, we choose <em>precision</em>.</h2>
+        </div>
+      </div>
+      
+      <div class="narrative-slide" id="n-slide-2">
+        <div class="slide-inner">
+          <div class="slide-eyebrow">02 / THE CONSTRAINT</div>
+          <h2 class="slide-headline">We limit ourselves to <em>3 to 4 projects</em> a year. That constraint is our product.</h2>
+        </div>
+      </div>
+      
+      <div class="narrative-slide" id="n-slide-3">
+        <div class="slide-inner">
+          <div class="slide-eyebrow">03 / THE CRAFT</div>
+          <h2 class="slide-headline">No junior handoffs. No shortcuts. Every system is built by senior hands to <em>endure</em>.</h2>
+        </div>
+      </div>
+      
+      <div class="narrative-indicator">
+        <div class="indicator-dot active"></div>
+        <div class="indicator-dot"></div>
+        <div class="indicator-dot"></div>
+      </div>
+    </div>
+  </section>
 
   <!-- TEAM SECTION -->
   <section id="team">
@@ -392,21 +379,6 @@
     </div>
   </section>
 
-  <!-- 3D CUBE LOGO SECTION -->
-  <section id="logo3d-section">
-    <div class="logo3d-wrap">
-      <div class="logo3d">
-        <div class="logo-face f-front">hw.</div>
-        <div class="logo-face f-back">hw.</div>
-        <div class="logo-face f-right">≥</div>
-        <div class="logo-face f-left">≤</div>
-        <div class="logo-face f-top">—</div>
-        <div class="logo-face f-bot">—</div>
-      </div>
-    </div>
-    <p class="logo3d-tagline rev gradient-text">We build things that work.</p>
-    <p class="logo3d-sub rev rev-d1">A senior software studio. Small on purpose. Precise by design.</p>
-  </section>
 
   <!-- THE STUDIO ARCHITECTURE SECTION -->
   <section id="studio">
