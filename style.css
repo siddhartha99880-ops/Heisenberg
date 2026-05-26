@@ -327,6 +327,9 @@ nav {
 .team-title em { font-style: italic; color: var(--cobalt); }
 .team-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; max-width: 1400px; margin: 0 auto; }
 .team-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
   background: var(--card-bg);
   border: 1px solid var(--border);
   padding: 40px 32px;

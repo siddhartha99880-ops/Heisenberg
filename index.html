@@ -159,54 +159,54 @@
     <div class="team-grid">
       
       <!-- Interactive Easter Eggs: Clicking team members prompts client chatbot widget! -->
-      <div class="team-card rev" data-member="Fahad">
+      <a href="team-fahad.html" class="team-card rev" data-member="Fahad">
         <div class="team-avatar">F</div>
         <div class="team-name glitch-text">Fahad</div>
         <div class="team-role">Founder &amp; Developer</div>
         <div class="team-link">Ask about Fahad →</div>
-      </div>
+      </a>
       
-      <div class="team-card rev rev-d1" data-member="Siddhartha">
+      <a href="team-siddhartha-singh.html" class="team-card rev rev-d1" data-member="Siddhartha Singh">
         <div class="team-avatar">S</div>
-        <div class="team-name glitch-text">Siddhartha</div>
+        <div class="team-name glitch-text">Siddhartha Singh</div>
         <div class="team-role">CEO &amp; AI Lead</div>
-        <div class="team-link">Ask about Siddhartha →</div>
-      </div>
+        <div class="team-link">Ask about Siddhartha Singh →</div>
+      </a>
       
-      <div class="team-card rev rev-d2" data-member="Siddharth Sahu">
+      <a href="team-siddharth-sahu.html" class="team-card rev rev-d2" data-member="Siddharth Sahu">
         <div class="team-avatar">SS</div>
         <div class="team-name glitch-text">Siddharth Sahu</div>
         <div class="team-role">Video Editor</div>
         <div class="team-link">Ask about Siddharth →</div>
-      </div>
+      </a>
       
-      <div class="team-card rev rev-d3" data-member="Tanisha">
+      <a href="team-tanisha.html" class="team-card rev rev-d3" data-member="Tanisha">
         <div class="team-avatar">T</div>
         <div class="team-name glitch-text">Tanisha</div>
         <div class="team-role">Frontend Developer</div>
         <div class="team-link">Ask about Tanisha →</div>
-      </div>
+      </a>
       
-      <div class="team-card rev rev-d4" data-member="Aditya Jaiswal">
+      <a href="team-aditya.html" class="team-card rev rev-d4" data-member="Aditya Jaiswal">
         <div class="team-avatar">AJ</div>
         <div class="team-name glitch-text">Aditya Jaiswal</div>
         <div class="team-role">Lead Growth &amp; Marketing</div>
         <div class="team-link">Ask about Aditya →</div>
-      </div>
+      </a>
       
-      <div class="team-card rev" data-member="Aniket Yadav">
+      <a href="team-aniket.html" class="team-card rev" data-member="Aniket Yadav">
         <div class="team-avatar">A</div>
         <div class="team-name glitch-text">Aniket Yadav</div>
         <div class="team-role">Graphics Designer</div>
         <div class="team-link">Ask about Aniket →</div>
-      </div>
+      </a>
       
-      <div class="team-card rev rev-d1" data-member="Tanushi">
+      <a href="team-tanushi.html" class="team-card rev rev-d1" data-member="Tanushi">
         <div class="team-avatar">T</div>
         <div class="team-name glitch-text">Tanushi</div>
         <div class="team-role">Lead Project Manager</div>
         <div class="team-link">Ask about Tanushi →</div>
-      </div>
+      </a>
       
     </div>
   </section>
@@ -518,33 +518,5 @@
   
   <!-- Encrypted Client AI chat widget -->
   <script src="chat.js"></script>
-
-  <!-- Interactive easter eggs: click team members to trigger chat widget! -->
-  <script>
-    document.querySelectorAll('.team-card').forEach(card => {
-      card.removeAttribute('onclick'); // override original behavior
-      card.addEventListener('click', (e) => {
-        e.preventDefault();
-        const member = card.dataset.member;
-        
-        // Find chat trigger and click it to open
-        const trigger = document.getElementById('chat-trigger');
-        const box = document.getElementById('chat-box');
-        
-        if (trigger && box) {
-          if (!box.classList.contains('open')) {
-            trigger.click();
-          }
-          
-          // Prefill text input with query about the member and focus
-          const input = document.getElementById('chat-input');
-          if (input) {
-            input.value = `Tell me about ${member}'s role at the studio.`;
-            input.focus();
-          }
-        }
-      });
-    });
-  </script>
 </body>
 </html>
